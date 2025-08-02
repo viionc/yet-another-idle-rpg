@@ -12,33 +12,31 @@ const generateItem = (id: ItemID, minAmount: number, maxAmount: number, chance: 
 
 const ENEMIES_DATA: Record<EnemyID, Enemy> = {
     [EnemyID.greenSlime]: {
+        id: EnemyID.greenSlime,
         maxHp: 2,
         weakness: DamageElement.fire,
         experience: 5,
-        drops: [
-            generateItem(ItemID.slimeResidue, 1, 2, 3),
-        ],
+        drops: [generateItem(ItemID.slimeResidue, 1, 2, 3)],
         url: './img/enemies/greenSlime.png',
     },
     [EnemyID.redSlime]: {
+        id: EnemyID.redSlime,
         maxHp: 3,
         weakness: DamageElement.water,
         experience: 5,
-        drops: [
-            generateItem(ItemID.slimeResidue, 1, 2, 3),
-        ],
+        drops: [generateItem(ItemID.slimeResidue, 1, 2, 3)],
         url: './img/enemies/redSlime.png',
     },
     [EnemyID.blueSlime]: {
+        id: EnemyID.blueSlime,
         maxHp: 2,
         weakness: DamageElement.air,
         experience: 5,
-        drops: [
-            generateItem(ItemID.slimeResidue, 1, 2, 3),
-        ],
+        drops: [generateItem(ItemID.slimeResidue, 1, 2, 3)],
         url: './img/enemies/blueSlime.png',
     },
     [EnemyID.kingSlime]: {
+        id: EnemyID.kingSlime,
         maxHp: 100,
         weakness: DamageElement.fire,
         experience: 40,
@@ -50,6 +48,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         isBossEnemy: true,
     },
     [EnemyID.crab]: {
+        id: EnemyID.crab,
         maxHp: 2,
         weakness: DamageElement.physical,
         experience: 5,
@@ -60,6 +59,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         url: './img/enemies/crab.png',
     },
     [EnemyID.seagull]: {
+        id: EnemyID.seagull,
         maxHp: 3,
         weakness: DamageElement.physical,
         experience: 8,
@@ -70,6 +70,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         url: './img/enemies/seagull.png',
     },
     [EnemyID.turtle]: {
+        id: EnemyID.turtle,
         maxHp: 5,
         weakness: DamageElement.fire,
         experience: 10,
@@ -80,6 +81,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         url: './img/enemies/turtle.png',
     },
     [EnemyID.gangsterCrab]: {
+        id: EnemyID.gangsterCrab,
         maxHp: 50,
         weakness: DamageElement.physical,
         experience: 50,
@@ -91,6 +93,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         isBossEnemy: true,
     },
     [EnemyID.rat]: {
+        id: EnemyID.rat,
         maxHp: 8,
         weakness: DamageElement.fire,
         experience: 11,
@@ -101,6 +104,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         url: './img/enemies/rat.png',
     },
     [EnemyID.giantRat]: {
+        id: EnemyID.giantRat,
         maxHp: 75,
         weakness: DamageElement.fire,
         experience: 100,
@@ -113,24 +117,23 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         isBossEnemy: true,
     },
     [EnemyID.wolf]: {
+        id: EnemyID.wolf,
         maxHp: 50,
         weakness: DamageElement.fire,
         experience: 30,
-        drops: [
-            generateItem(ItemID.wolfFangs, 1, 3, 2),
-        ],
+        drops: [generateItem(ItemID.wolfFangs, 1, 3, 2)],
         url: './img/enemies/wolf.png',
     },
     [EnemyID.deer]: {
+        id: EnemyID.deer,
         maxHp: 25,
         weakness: DamageElement.fire,
         experience: 20,
-        drops: [
-            generateItem(ItemID.deerPelt, 1, 1, 4),
-        ],
+        drops: [generateItem(ItemID.deerPelt, 1, 1, 4)],
         url: './img/enemies/deer.png',
     },
     [EnemyID.bandit]: {
+        id: EnemyID.bandit,
         maxHp: 75,
         weakness: DamageElement.air,
         experience: 50,
@@ -142,6 +145,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         url: './img/enemies/bandit.png',
     },
     [EnemyID.goblinScout]: {
+        id: EnemyID.goblinScout,
         maxHp: 30,
         weakness: DamageElement.fire,
         experience: 25,
@@ -149,6 +153,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         url: './img/enemies/goblinScout.png',
     },
     [EnemyID.troll]: {
+        id: EnemyID.troll,
         maxHp: 200,
         weakness: DamageElement.water,
         experience: 500,

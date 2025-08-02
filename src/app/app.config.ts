@@ -1,22 +1,23 @@
-import { APP_INITIALIZER, ApplicationConfig, isDevMode, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
-import { ActionReducer, provideState, provideStore } from '@ngrx/store';
-import { gameFeature } from './store/game/game.reducer';
-import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { localStorageSync } from 'ngrx-store-localstorage';
-import { playerFeature } from './store/player/player.reducer';
-import { provideHttpClient } from '@angular/common/http';
-import i18next from 'i18next';
-import HttpBackend from 'i18next-http-backend';
-import { battleFeature } from './store/battle/battle.reducer';
-import { BattleEffects } from './store/battle/battle.effects';
-import { provideEffects } from '@ngrx/effects';
+import { APP_INITIALIZER, ApplicationConfig, isDevMode, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core'
+import { provideRouter } from '@angular/router'
+import { routes } from './app.routes'
+import { ActionReducer, provideState, provideStore } from '@ngrx/store'
+import { gameFeature } from './store/game/game.reducer'
+import { provideStoreDevtools } from '@ngrx/store-devtools'
+import { localStorageSync } from 'ngrx-store-localstorage'
+import { playerFeature } from './store/player/player.reducer'
+import { provideHttpClient } from '@angular/common/http'
+import i18next from 'i18next'
+import HttpBackend from 'i18next-http-backend'
+import { battleFeature } from './store/battle/battle.reducer'
+import { BattleEffects } from './store/battle/battle.effects'
+import { provideEffects } from '@ngrx/effects'
+import { PlayerEffects } from './store/player/player.effects'
 
 export function localStorageSyncReducer(
   reducer: ActionReducer<any>,
 ): ActionReducer<any> {
-  return localStorageSync({ keys: ['game', 'player'], rehydrate: true, })(reducer);
+  return localStorageSync({ keys: ['game', 'player', 'battle'], rehydrate: true, })(reducer)
 }
 
 export function i18nextInitializer() {
@@ -34,7 +35,7 @@ export function i18nextInitializer() {
         interpolation: {
           escapeValue: false,
         },
-      });
+      })
 }
 
 
@@ -44,8 +45,11 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideEffects(BattleEffects),
     provideStore([], { metaReducers: [localStorageSyncReducer] }),
+    provideEffects([
+      BattleEffects,
+      PlayerEffects,
+    ]),
     provideState(gameFeature),
     provideState(playerFeature),
     provideState(battleFeature),

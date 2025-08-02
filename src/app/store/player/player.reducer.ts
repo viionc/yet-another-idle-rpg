@@ -1,5 +1,5 @@
-import { createReducer, on, State, Action, createFeature } from "@ngrx/store";
-import { PlayerStat } from "../../../types/player/playerStat.type";
+import { createReducer, on, State, Action, createFeature } from "@ngrx/store"
+import { PlayerStat } from "../../../types/player/playerStat.type"
 import * as actions from './player.actions'
 
 export type PlayerStatsType = Record<PlayerStat, number>
@@ -49,32 +49,33 @@ const initialState: PlayerState = {
 
 const reducer = createReducer(
     initialState,
-    on(actions.updatePlayerStatAction, (state, { stat, amount }) => updateStat(state, stat, amount)),
-);
+    on(actions.updatePlayerStatsAction, (state, { stats }) => updateStat(state, stats)),
+)
 
 export const playerFeature = createFeature({
     name: 'player',
     reducer,
-});
+})
 
-const updateStat = (state: PlayerState, stat: PlayerStat, amount: number) => {
-    let statToUpdate = state.stats[stat]
+const updateStat = (state: PlayerState, stats: { stat: PlayerStat, amount: number }[]) => {
+    const tempStats = { ...state.stats }
 
-    switch (stat) {
-        case 'attackSpeed':
-        case 'manaRegenRate':
-        case 'shopRefreshCooldown':
-            statToUpdate -= amount
-            break
-        default:
-            statToUpdate += amount
-  }
+    stats.forEach((stat) => {
+        switch (stat.stat) {
+            case 'attackSpeed':
+            case 'manaRegenRate':
+            case 'shopRefreshCooldown':
+                tempStats[stat.stat] -= stat.amount
+                break
+            default:
+                tempStats[stat.stat] += stat.amount
+        }
+    })
 
-  return {
-    ...state,
-    stats: {
-        ...state.stats,
-        [stat]: statToUpdate
+
+
+    return {
+        ...state,
+        stats: tempStats,
     }
-  }
 }

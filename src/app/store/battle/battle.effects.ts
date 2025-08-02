@@ -1,30 +1,30 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { combineLatestWith, switchMap } from 'rxjs';
-import { defaultAttackAction, doDamageAction, startBattleAction } from './battle.actions';
-import { selectPlayerStats } from '../player';
-import { Store } from '@ngrx/store';
+import { Injectable } from '@angular/core'
+import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { switchMap, withLatestFrom } from 'rxjs'
+import { battleEndedAction, defaultAttackAction, updateEnemyHpAction } from './battle.actions'
+import { selectPlayerStats } from '../player'
+import { Store } from '@ngrx/store'
+import { selectCurrentEnemy, selectCurrentEnemyHp } from '.'
 
 @Injectable()
 export class BattleEffects {
-    // startBattle$ = createEffect(() =>
-    //     this.actions$.pipe(
-    //         ofType(startBattleAction),
-    //         combineLatestWith(this.store.select(select)),
-    //         switchMap(([_, playerStats]) => {
-    //             return []
-    //         })
-    //     )
-    // );
-
     defaultAttack$ = createEffect(() =>
         this.actions$.pipe(
             ofType(defaultAttackAction),
-            combineLatestWith(this.store.select(selectPlayerStats)),
-            switchMap(([_, playerStats]) => {
-                const damage = playerStats.attackPower
+            withLatestFrom(
+                this.store.select(selectPlayerStats),
+                this.store.select(selectCurrentEnemy),
+                this.store.select(selectCurrentEnemyHp),
+            ),
+            switchMap(([_, playerStats, currentEnemy, currentEnemyHp]) => {
+                const hpAfterDamage = currentEnemyHp - playerStats.attackPower
+                const isDead = hpAfterDamage <= 0
 
-                return [doDamageAction({ damage })]
+                const actions: any[] = [updateEnemyHpAction({ newHp: hpAfterDamage <= 0 ? 0 : hpAfterDamage })]
+
+                if (isDead) actions.push(battleEndedAction({ enemyId: currentEnemy.id }))
+
+                return actions
             })
         )
     );

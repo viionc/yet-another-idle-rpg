@@ -1,9 +1,9 @@
-import { createReducer, on, createFeature } from '@ngrx/store';
-import { Enemy } from 'interfaces/enemy.inteface';
+import { createReducer, on, createFeature } from '@ngrx/store'
+import { Enemy } from 'interfaces/enemy.inteface'
 import * as actions from './battle.actions'
-import { ZoneID } from 'enums/ids/zone-id.enum';
-import ZONES_DATA from 'data/zones-data';
-import ENEMIES_DATA from 'data/enemies-data';
+import { ZoneID } from 'enums/ids/zone-id.enum'
+import ZONES_DATA from 'data/zones-data'
+import ENEMIES_DATA from 'data/enemies-data'
 
 
 export interface BattleState {
@@ -21,7 +21,7 @@ const initialState: BattleState = {
 }
 
 const startBattle = (state: BattleState): BattleState => {
-    console.log('battleStarted');
+    console.log('battleStarted')
     const possibleEnemies = ZONES_DATA[state.currentZone].enemies
     const randomIndex = Math.floor(Math.random() * possibleEnemies.length)
     const enemyId = possibleEnemies[randomIndex]
@@ -43,10 +43,19 @@ const reducer = createReducer(
         ...state,
         currentZone: zoneId,
     })),
-    on(actions.doDamageAction, (state, { damage }) => ({
-        ...state,
-        currentEnemyHp: state.currentEnemyHp - damage,
-    }))
+    on(actions.updateEnemyHpAction, (state, { newHp }) => {
+        const isDead = newHp <= 0
+
+        if (isDead) console.log('battle ended')
+
+
+        return {
+            ...state,
+            currentEnemyHp: newHp,
+            enemy: isDead ? null : state.enemy,
+            isInCombat: !isDead,
+        }
+    })
 )
 
 export const battleFeature = createFeature({

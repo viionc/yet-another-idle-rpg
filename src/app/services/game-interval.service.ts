@@ -1,12 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { combineLatest, combineLatestWith, filter, interval, of, Subject, Subscription, tap } from 'rxjs';
-import { updateTickAction } from '../store/game/game.actions';
-import { selectPlayerAttackSpeed } from '../store/game';
-import { clearInterval, setInterval } from 'worker-timers';
-import { updatePlayerStatAction } from '../store/player/player.actions';
-import { selectIsInCombat } from 'app/store/battle';
-import { defaultAttackAction, startBattleAction } from 'app/store/battle/battle.actions';
+import { Injectable } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { combineLatestWith, Subject, Subscription, tap } from 'rxjs'
+import { selectPlayerAttackSpeed } from '../store/game'
+import { clearInterval, setInterval } from 'worker-timers'
+import { selectIsInCombat } from 'app/store/battle'
+import { defaultAttackAction, startBattleAction } from 'app/store/battle/battle.actions'
 
 const TICK_DURATION_IN_MS = 100
 
@@ -49,7 +47,6 @@ export class GameIntervalService {
 
             if (this.tick / 1000 === 1) {
                 this.tick = 0
-                this.store.dispatch(updatePlayerStatAction({ stat: 'goldCoins', amount: 1 }))
             }
         })
     }

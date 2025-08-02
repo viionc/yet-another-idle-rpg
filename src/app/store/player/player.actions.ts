@@ -1,4 +1,4 @@
-import { createAction, props } from "@ngrx/store";
-import { PlayerStat } from "../../../types/player/playerStat.type";
+import { createAction, props } from "@ngrx/store"
+import { PlayerStat } from "../../../types/player/playerStat.type"
 
-export const updatePlayerStatAction = createAction('[Player] Update Stat', props<{ stat: PlayerStat, amount: number }>())
+export const updatePlayerStatsAction = createAction('[Player] Update Stats', props<{ stats: { stat: PlayerStat, amount: number }[] }>())
