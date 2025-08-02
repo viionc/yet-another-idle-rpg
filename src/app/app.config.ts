@@ -9,6 +9,9 @@ import { playerFeature } from './store/player/player.reducer';
 import { provideHttpClient } from '@angular/common/http';
 import i18next from 'i18next';
 import HttpBackend from 'i18next-http-backend';
+import { battleFeature } from './store/battle/battle.reducer';
+import { BattleEffects } from './store/battle/battle.effects';
+import { provideEffects } from '@ngrx/effects';
 
 export function localStorageSyncReducer(
   reducer: ActionReducer<any>,
@@ -26,7 +29,7 @@ export function i18nextInitializer() {
         backend: {
           loadPath: '/assets/locales/{{lng}}/{{ns}}.json',
         },
-        ns: ['app'],
+        ns: ['app', 'enemies', 'zones'],
         defaultNS: 'app',
         interpolation: {
           escapeValue: false,
@@ -41,9 +44,11 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
+    provideEffects(BattleEffects),
     provideStore([], { metaReducers: [localStorageSyncReducer] }),
     provideState(gameFeature),
     provideState(playerFeature),
+    provideState(battleFeature),
     provideStoreDevtools({
       maxAge: 25, // Retains last 25 states
       logOnly: !isDevMode(), // Restrict extension to log-only mode
@@ -57,5 +62,6 @@ export const appConfig: ApplicationConfig = {
       useFactory: i18nextInitializer,
       multi: true,
     },
-]
+  ]
 };
+
