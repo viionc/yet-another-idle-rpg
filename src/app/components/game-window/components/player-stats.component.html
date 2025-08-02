@@ -1,0 +1,27 @@
+<h3></h3>
+<ul>
+    <li class="level">
+        {{ 'playerStats.level' | i18next }}: {{playerStats.level}}
+        <span *ngIf="playerStats.unspentSkillPoints"> - {{ 'playerStats.skillPoints' | i18next }}:
+            {{playerStats.unspentSkillPoints}}</span>
+    </li>
+    <li class="cyan">
+        {{ 'playerStats.experience' | i18next }}: {{playerStats.experience.toLocaleString('en-US')}} /
+        {{(((playerStats.level || 0) + 1) | calculateXp).toLocaleString('en-US')}}
+    </li>
+    <li class="cyan">{{ 'playerStats.xpMultiplier' | i18next }}: {{Math.floor((playerStats.xpMultiplier ||
+        0) * 100)}}%</li>
+    <li class="yellow">{{ 'playerStats.gold' | i18next }}: {{playerStats.goldCoins | abbr}}</li>
+    <li class="yellow">{{ 'playerStats.goldMultiplier' | i18next }}:
+        {{Math.floor(playerStats.goldCoinsMultiplier * 100)}}%</li>
+    <li>
+        {{ 'playerStats.mana' | i18next }}: {{playerStats.mana}}/{{playerStats.maxMana}}
+        <span class="blue">{{playerStats.currentManaRegenTimer}}</span>
+    </li>
+    <li>{{ 'playerStats.attackPower' | i18next }}: {{playerStats.attackPower}}</li>
+    <li>{{ 'playerStats.attackSpeed' | i18next }}: {{playerStats.attackSpeed.toFixed(1)}}</li>
+    <ng-container *ngIf="playerStats.critChance">
+        <li>{{ 'playerStats.critChance' | i18next }}: {{playerStats.critChance}}%</li>
+        <li>{{ 'playerStats.critMulti' | i18next }}: {{Math.floor((playerStats.critMulti - 1) * 100)}}%</li>
+    </ng-container>
+</ul>

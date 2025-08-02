@@ -4,6 +4,7 @@ import { combineLatest, filter, interval, of, Subject, Subscription, tap } from 
 import { updateTickAction } from '../store/game/game.actions';
 import { selectPlayerAttackSpeed } from '../store/game';
 import { clearInterval, setInterval } from 'worker-timers';
+import { updatePlayerStatAction } from '../store/player/player.actions';
 
 @Injectable({providedIn: 'root'})
 export class GameIntervalService {
@@ -16,6 +17,8 @@ export class GameIntervalService {
     constructor(private store: Store) { }
     
     initInterval() {
+        if (this.intervalSub) return
+
         this.interval = setInterval(()=>{ this.keepAlive.next() }, 100)
         this.intervalSub = combineLatest([
             this.keepAlive, 
@@ -25,7 +28,7 @@ export class GameIntervalService {
             filter(([_, attackSpeed]) => (attackSpeed * 1000) / this.tick === 1),
         ).subscribe(() => {
             this.tick = 0
-            console.log('attack');
+            this.store.dispatch(updatePlayerStatAction({ stat: 'experience', amount: 1 }))
         })
     }
 

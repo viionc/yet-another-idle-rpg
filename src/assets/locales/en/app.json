@@ -1,0 +1,15 @@
+{
+    "playerStats": {
+        "attackSpeed": "Attack Speed",
+        "attackPower": "Attack Power",
+        "mana": "Mana",
+        "critChance": "Crit Chance",
+        "critMulti": "Crit Multiplier",
+        "experience": "XP",
+        "level": "Level",
+        "xpMultiplier": "XP Multiplier",
+        "gold": "Gold",
+        "goldMultiplier": "Gold Multiplier",
+        "skillPoints": "Skill points"
+    }
+}
