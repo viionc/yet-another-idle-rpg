@@ -24,10 +24,18 @@ export const initialState: BattleState = {
 
 const startBattle = (state: BattleState): BattleState => {
     console.log('battleStarted')
-    const possibleEnemies = ZONES_DATA[state.currentZone].enemies
-    const randomIndex = Math.floor(Math.random() * possibleEnemies.length)
-    const enemyId = possibleEnemies[randomIndex]
-    const enemy = ENEMIES_DATA[enemyId]
+    const zoneData = ZONES_DATA[state.currentZone]
+    let enemy = null
+
+    if (state.currentWave !== zoneData.maxWave) {
+        const possibleEnemies = ZONES_DATA[state.currentZone].enemies
+        const randomIndex = Math.floor(Math.random() * possibleEnemies.length)
+        const enemyId = possibleEnemies[randomIndex]
+        enemy = ENEMIES_DATA[enemyId]
+    } else {
+        enemy = ENEMIES_DATA[zoneData.bossEnemyId]
+    }
+
 
     return {
         ...state,
