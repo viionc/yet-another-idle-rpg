@@ -29,12 +29,44 @@ const startBattle = (state: BattleState): BattleState => {
     const enemyId = possibleEnemies[randomIndex]
     const enemy = ENEMIES_DATA[enemyId]
 
-
     return {
         ...state,
         isInCombat: true,
         enemy,
         currentEnemyHp: enemy.maxHp,
+    }
+}
+
+const handleWave = (state: BattleState, next: boolean): BattleState => {
+    const zoneData = ZONES_DATA[state.currentZone]
+
+    if (next) {
+        const nextZone = zoneData.nextZoneId
+        const shouldGoNextZone = nextZone && state.currentWave === zoneData.maxWave
+        const wave = shouldGoNextZone ? 1 : state.currentWave + 1
+
+        return {
+            ...state,
+            currentEnemyHp: 0,
+            enemy: null,
+            isInCombat: false,
+            currentWave: wave,
+            currentZone: shouldGoNextZone ? nextZone : state.currentZone
+        }
+    }
+
+    const previousZoneId = zoneData.previousZoneId
+    const previousZoneData = ZONES_DATA[previousZoneId]
+    const shouldGoPreviousZone = previousZoneId && state.currentWave === 1
+    const wave = shouldGoPreviousZone ? previousZoneData.maxWave : state.currentWave - 1
+
+    return {
+        ...state,
+        currentEnemyHp: 0,
+        enemy: null,
+        isInCombat: false,
+        currentWave: wave,
+        currentZone: shouldGoPreviousZone ? previousZoneId : state.currentZone
     }
 }
 
@@ -55,20 +87,8 @@ const reducer = createReducer(
         enemy: null,
         isInCombat: false,
     })),
-    on(actions.nextWaveAction, (state) => ({
-        ...state,
-        currentEnemyHp: 0,
-        enemy: null,
-        isInCombat: false,
-        currentWave: state.currentWave + 1,
-    })),
-    on(actions.previousWaveAction, (state) => ({
-        ...state,
-        currentEnemyHp: 0,
-        enemy: null,
-        isInCombat: false,
-        currentWave: state.currentWave - 1,
-    }))
+    on(actions.nextWaveAction, (state) => handleWave(state, true)),
+    on(actions.previousWaveAction, (state) => handleWave(state, false))
 )
 
 export const battleFeature = createFeature({

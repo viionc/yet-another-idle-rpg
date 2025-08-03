@@ -1,4 +1,4 @@
-<div [style]="{ 'background': currentZone.url | url }">
+<div class="battle-window" [style]="{ 'background-image': currentZone.url | url }">
     <app-battle-nav-bar-container [currentEnemy]="currentEnemy" [currentZone]="currentZone" />
     <div class="battle-pane">
         <app-spinner *ngIf="!isInCombat" />
