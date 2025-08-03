@@ -1,4 +1,6 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core'
+
+export const calculatXp = (level: number) => (50 * (Math.pow(level, 3) - 6 * Math.pow(level, 2) + 17 * level - 12)) / 3
 
 @Pipe({
     name: 'calculateXp',
@@ -7,6 +9,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CalculateXpPipe implements PipeTransform {
     transform(level: number) {
         //Tibia XP formula
-        return (50 * (Math.pow(level, 3) - 6 * Math.pow(level, 2) + 17 * level - 12)) / 3;
+        return calculatXp(level)
     };
 }

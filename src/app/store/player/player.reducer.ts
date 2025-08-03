@@ -1,6 +1,7 @@
 import { createReducer, on, State, Action, createFeature } from "@ngrx/store"
 import { PlayerStat } from "../../../types/player/playerStat.type"
 import * as actions from './player.actions'
+import { calculatXp } from 'app/pipe/calculate-xp.pipe'
 
 export type PlayerStatsType = Record<PlayerStat, number>
 
@@ -57,6 +58,18 @@ export const playerFeature = createFeature({
     reducer,
 })
 
+const handleExperience = (stats: PlayerStatsType) => {
+    const xpForNextLevel = calculatXp(stats.level + 1)
+
+    if (stats.experience < xpForNextLevel) return
+
+    stats.level++
+    stats.unspentSkillPoints++
+    const leftoverXp = stats.experience - xpForNextLevel
+    stats.experience = leftoverXp > 0 ? leftoverXp : 0
+    handleExperience(stats)
+}
+
 const updateStat = (state: PlayerState, stats: { stat: PlayerStat, amount: number }[]) => {
     const tempStats = { ...state.stats }
 
@@ -67,11 +80,15 @@ const updateStat = (state: PlayerState, stats: { stat: PlayerStat, amount: numbe
             case 'shopRefreshCooldown':
                 tempStats[stat.stat] -= stat.amount
                 break
+            case 'experience': {
+                tempStats[stat.stat] += stat.amount
+                handleExperience(tempStats)
+                break
+            }
             default:
                 tempStats[stat.stat] += stat.amount
         }
     })
-
 
 
     return {
