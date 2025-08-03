@@ -15,7 +15,7 @@ export class GameIntervalService {
     private keepAlive = new Subject<void>()
     private attackSpeed$ = this.store.select(selectPlayerAttackSpeed)
     private isInCombat$ = this.store.select(selectIsInCombat)
-    private resetBattleTickSub$: Subscription
+    private resetBattleTickSub: Subscription
     private battleTick = 0
     private tick = 0
 
@@ -51,7 +51,7 @@ export class GameIntervalService {
             }
         })
 
-        this.resetBattleTickSub$ = combineLatest([
+        this.resetBattleTickSub = combineLatest([
             this.store.select(selectCurrentWave),
             this.store.select(selectCurrentEnemy)
         ]).subscribe(() => this.battleTick = 0)
@@ -63,5 +63,6 @@ export class GameIntervalService {
         this.keepAlive.next()
         this.keepAlive.complete()
         this.intervalSub?.unsubscribe()
+        this.resetBattleTickSub?.unsubscribe()
     }
 }

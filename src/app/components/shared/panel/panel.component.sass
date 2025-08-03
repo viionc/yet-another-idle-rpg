@@ -1,18 +1,9 @@
 @use '../../../../styles/_variables' as vars
 
 :\host
-    height: vars.$panelHeight
+    // height: vars.$panelHeight
     background-color: vars.$panelBackgroundColor
     border: vars.$panelBorder
     border-radius: vars.$panelBorderRadius
     box-shadow: vars.$panelShadow
     padding: vars.$panelPadding
-
-    &.small
-        grid-column: span 1 / span 1
-
-    &.medium
-        grid-column: span 2 / span 2
-
-    &.no-padding
-        padding: 0

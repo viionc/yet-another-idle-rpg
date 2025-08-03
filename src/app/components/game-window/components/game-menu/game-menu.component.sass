@@ -1,0 +1,31 @@
+@use '../../../../../styles/_variables' as vars
+@use '../../../../../styles/palette' as palette
+
+.game-menu
+    height: vars.$menuHeight
+    width: 100%
+
+    &__tabs
+        display: flex
+        height: 100%
+        width: 100%
+
+    &__tab
+        height: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+        font-size: 1.5rem
+        padding: 1rem
+        width: 250px
+        cursor: pointer
+
+        .skill-point
+            color: palette.$yellow
+            margin-left: 0.5rem
+
+        &:hover
+            background-color: palette.$yellow
+
+            .skill-point
+                color: #ffffff
