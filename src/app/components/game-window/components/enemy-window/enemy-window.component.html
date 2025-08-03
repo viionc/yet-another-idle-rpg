@@ -1,0 +1,10 @@
+<div class="enemy">
+    @let percantage = (currentEnemyHp / currentEnemy.maxHp) * 100;
+    @let background = 'linear-gradient(90deg, rgba(255, 0, 0, 1) ' + percantage + '%, rgba(0, 0, 0, 1)' + percantage +
+    '%)';
+
+    <div class="hp-bar" [style]="{ 'background': [[background]] }  ">
+        <span>{{ currentEnemyHp }} / {{ currentEnemy.maxHp }}</span>
+    </div>
+    <img [ngSrc]="currentEnemy.url" height="128" width="128" alt="">
+</div>

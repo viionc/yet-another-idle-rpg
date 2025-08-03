@@ -43,19 +43,16 @@ const reducer = createReducer(
         ...state,
         currentZone: zoneId,
     })),
-    on(actions.updateEnemyHpAction, (state, { newHp }) => {
-        const isDead = newHp <= 0
-
-        if (isDead) console.log('battle ended')
-
-
-        return {
-            ...state,
-            currentEnemyHp: newHp,
-            enemy: isDead ? null : state.enemy,
-            isInCombat: !isDead,
-        }
-    })
+    on(actions.updateEnemyHpAction, (state, { newHp }) => ({
+        ...state,
+        currentEnemyHp: newHp,
+    })),
+    on(actions.battleEndedAction, (state) => ({
+        ...state,
+        currentEnemyHp: 0,
+        enemy: null,
+        isInCombat: false,
+    }))
 )
 
 export const battleFeature = createFeature({

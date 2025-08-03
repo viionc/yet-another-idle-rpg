@@ -17,7 +17,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         weakness: DamageElement.fire,
         experience: 5,
         drops: [generateItem(ItemID.slimeResidue, 1, 2, 3)],
-        url: './img/enemies/greenSlime.png',
+        url: './assets/img/enemies/greenSlime.png',
     },
     [EnemyID.redSlime]: {
         id: EnemyID.redSlime,
@@ -25,7 +25,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         weakness: DamageElement.water,
         experience: 5,
         drops: [generateItem(ItemID.slimeResidue, 1, 2, 3)],
-        url: './img/enemies/redSlime.png',
+        url: './assets/img/enemies/redSlime.png',
     },
     [EnemyID.blueSlime]: {
         id: EnemyID.blueSlime,
@@ -33,7 +33,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         weakness: DamageElement.air,
         experience: 5,
         drops: [generateItem(ItemID.slimeResidue, 1, 2, 3)],
-        url: './img/enemies/blueSlime.png',
+        url: './assets/img/enemies/blueSlime.png',
     },
     [EnemyID.kingSlime]: {
         id: EnemyID.kingSlime,
@@ -44,7 +44,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
             generateItem(ItemID.slimeGoldenCrown, 1, 1, 10),
             generateItem(ItemID.crabMeat, 1, 10, 1),
         ],
-        url: './img/enemies/kingSlime.png',
+        url: './assets/img/enemies/kingSlime.png',
         isBossEnemy: true,
     },
     [EnemyID.crab]: {
@@ -56,7 +56,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
             generateItem(ItemID.crabMeat, 1, 1, 2),
             generateItem(ItemID.stick, 1, 1, 4),
         ],
-        url: './img/enemies/crab.png',
+        url: './assets/img/enemies/crab.png',
     },
     [EnemyID.seagull]: {
         id: EnemyID.seagull,
@@ -67,7 +67,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
             generateItem(ItemID.feather, 1, 2, 2),
             generateItem(ItemID.stick, 1, 1, 4),
         ],
-        url: './img/enemies/seagull.png',
+        url: './assets/img/enemies/seagull.png',
     },
     [EnemyID.turtle]: {
         id: EnemyID.turtle,
@@ -78,7 +78,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
             generateItem(ItemID.turtleShell, 1, 1, 3),
             generateItem(ItemID.stick, 1, 1, 4),
         ],
-        url: './img/enemies/turtle.png',
+        url: './assets/img/enemies/turtle.png',
     },
     [EnemyID.gangsterCrab]: {
         id: EnemyID.gangsterCrab,
@@ -89,7 +89,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
             generateItem(ItemID.knife, 1, 1, 10),
             generateItem(ItemID.crabMeat, 1, 3, 1),
         ],
-        url: './img/enemies/gangsterCrab.png',
+        url: './assets/img/enemies/gangsterCrab.png',
         isBossEnemy: true,
     },
     [EnemyID.rat]: {
@@ -101,7 +101,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
             generateItem(ItemID.ratTail, 1, 1, 1),
             generateItem(ItemID.cheese, 1, 1, 8),
         ],
-        url: './img/enemies/rat.png',
+        url: './assets/img/enemies/rat.png',
     },
     [EnemyID.giantRat]: {
         id: EnemyID.giantRat,
@@ -113,7 +113,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
             generateItem(ItemID.cheese, 1, 3, 2),
             generateItem(ItemID.ratCatcher, 1, 1, 40),
         ],
-        url: './img/enemies/giantRat.png',
+        url: './assets/img/enemies/giantRat.png',
         isBossEnemy: true,
     },
     [EnemyID.wolf]: {
@@ -122,7 +122,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         weakness: DamageElement.fire,
         experience: 30,
         drops: [generateItem(ItemID.wolfFangs, 1, 3, 2)],
-        url: './img/enemies/wolf.png',
+        url: './assets/img/enemies/wolf.png',
     },
     [EnemyID.deer]: {
         id: EnemyID.deer,
@@ -130,7 +130,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         weakness: DamageElement.fire,
         experience: 20,
         drops: [generateItem(ItemID.deerPelt, 1, 1, 4)],
-        url: './img/enemies/deer.png',
+        url: './assets/img/enemies/deer.png',
     },
     [EnemyID.bandit]: {
         id: EnemyID.bandit,
@@ -142,7 +142,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
             generateItem(ItemID.trophyNecklace, 1, 1, 100),
             generateItem(ItemID.machete, 1, 1, 80),
         ],
-        url: './img/enemies/bandit.png',
+        url: './assets/img/enemies/bandit.png',
     },
     [EnemyID.goblinScout]: {
         id: EnemyID.goblinScout,
@@ -150,7 +150,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         weakness: DamageElement.fire,
         experience: 25,
         drops: [],
-        url: './img/enemies/goblinScout.png',
+        url: './assets/img/enemies/goblinScout.png',
     },
     [EnemyID.troll]: {
         id: EnemyID.troll,
@@ -158,7 +158,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         weakness: DamageElement.water,
         experience: 500,
         drops: [],
-        url: './img/enemies/troll.png',
+        url: './assets/img/enemies/troll.png',
         isBossEnemy: true,
     },
 }

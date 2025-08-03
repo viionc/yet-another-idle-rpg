@@ -1,6 +1,1 @@
-<section
-    [class.small]="size === 'small'"
-    [class.medium]="size === 'medium'"
->
-    <ng-content/>
-</section>
+<ng-content [class.small]="size === 'small'" [class.medium]="size === 'medium'" [data-size]="size" />

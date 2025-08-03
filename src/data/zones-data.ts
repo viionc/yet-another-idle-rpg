@@ -5,7 +5,7 @@ import { Zone } from 'interfaces/zone.interface'
 const ZONES_DATA: Record<ZoneID, Zone> = {
     [ZoneID.horseshoeBeach]: {
         id: ZoneID.horseshoeBeach,
-        url: './img/backgrounds/horseshoeBeach.png',
+        url: './assets/img/backgrounds/horseshoeBeach.png',
         enemies: [EnemyID.crab, EnemyID.seagull, EnemyID.turtle],
         maxWave: 10,
         enemiesPerWave: 10,
@@ -14,7 +14,7 @@ const ZONES_DATA: Record<ZoneID, Zone> = {
     },
     [ZoneID.tradersBasement]: {
         id: ZoneID.tradersBasement,
-        url: './img/backgrounds/tradersBasement.png',
+        url: './assets/img/backgrounds/tradersBasement.png',
         enemies: [EnemyID.rat],
         maxWave: 6,
         enemiesPerWave: 10,
@@ -22,7 +22,7 @@ const ZONES_DATA: Record<ZoneID, Zone> = {
     },
     [ZoneID.plains]: {
         id: ZoneID.plains,
-        url: './img/backgrounds/plains.png',
+        url: './assets/img/backgrounds/plains.png',
         enemies: [EnemyID.blueSlime, EnemyID.redSlime, EnemyID.greenSlime],
         maxWave: 10,
         enemiesPerWave: 10,
@@ -32,7 +32,7 @@ const ZONES_DATA: Record<ZoneID, Zone> = {
     },
     [ZoneID.theLongPath]: {
         id: ZoneID.theLongPath,
-        url: './img/backgrounds/theLongPath.png',
+        url: './assets/img/backgrounds/theLongPath.png',
         enemies: [EnemyID.bandit, EnemyID.deer, EnemyID.wolf, EnemyID.goblinScout],
         maxWave: 20,
         enemiesPerWave: 8,
