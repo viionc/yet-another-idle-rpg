@@ -1,4 +1,4 @@
-import { createReducer, on, createFeature } from '@ngrx/store';
+import { createReducer, on, createFeature } from '@ngrx/store'
 import * as actions from './game.actions'
 
 export interface GameState {
@@ -6,7 +6,7 @@ export interface GameState {
   attackSpeed: number
 }
 
-const initialState: GameState = {
+export const initialState: GameState = {
   tick: 0,
   attackSpeed: 3,
 }
@@ -17,9 +17,9 @@ const reducer = createReducer(
     ...state,
     tick: state.tick + 1
   }))
-);
+)
 
 export const gameFeature = createFeature({
   name: 'game',
   reducer,
-});
+})

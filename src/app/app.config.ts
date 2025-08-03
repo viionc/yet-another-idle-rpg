@@ -13,6 +13,30 @@ import { battleFeature } from './store/battle/battle.reducer'
 import { BattleEffects } from './store/battle/battle.effects'
 import { provideEffects } from '@ngrx/effects'
 import { PlayerEffects } from './store/player/player.effects'
+import { initialStates } from './store/store'
+
+export function ensureStateShapeMetaReducer(
+  reducer: ActionReducer<any>
+): ActionReducer<any> {
+  return (state, action) => {
+    const nextState = reducer(state, action)
+
+    if (!nextState) return nextState
+
+    const patchedState = { ...nextState }
+
+    for (const key of Object.keys(initialStates)) {
+      if (nextState[key]) {
+        patchedState[key] = {
+          ...initialStates[key],
+          ...nextState[key],
+        }
+      }
+    }
+
+    return patchedState
+  }
+}
 
 export function localStorageSyncReducer(
   reducer: ActionReducer<any>,
@@ -45,7 +69,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideStore([], { metaReducers: [localStorageSyncReducer] }),
+    provideStore([], { metaReducers: [localStorageSyncReducer, ensureStateShapeMetaReducer] }),
     provideEffects([
       BattleEffects,
       PlayerEffects,

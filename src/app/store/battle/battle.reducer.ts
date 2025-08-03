@@ -11,13 +11,15 @@ export interface BattleState {
     enemy: Enemy | null
     currentEnemyHp: number,
     currentZone: ZoneID
+    currentWave: number
 }
 
-const initialState: BattleState = {
+export const initialState: BattleState = {
     isInCombat: false,
     enemy: null,
     currentEnemyHp: 0,
     currentZone: ZoneID.horseshoeBeach,
+    currentWave: 1,
 }
 
 const startBattle = (state: BattleState): BattleState => {
@@ -52,6 +54,20 @@ const reducer = createReducer(
         currentEnemyHp: 0,
         enemy: null,
         isInCombat: false,
+    })),
+    on(actions.nextWaveAction, (state) => ({
+        ...state,
+        currentEnemyHp: 0,
+        enemy: null,
+        isInCombat: false,
+        currentWave: state.currentWave + 1,
+    })),
+    on(actions.previousWaveAction, (state) => ({
+        ...state,
+        currentEnemyHp: 0,
+        enemy: null,
+        isInCombat: false,
+        currentWave: state.currentWave - 1,
     }))
 )
 

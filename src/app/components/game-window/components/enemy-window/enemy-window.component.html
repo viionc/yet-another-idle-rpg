@@ -6,5 +6,5 @@
     <div class="hp-bar" [style]="{ 'background': [[background]] }  ">
         <span>{{ currentEnemyHp }} / {{ currentEnemy.maxHp }}</span>
     </div>
-    <img [ngSrc]="currentEnemy.url" height="128" width="128" alt="">
+    <img [ngSrc]="currentEnemy.url" height="128" width="128" disableOptimizedSrcset alt="">
 </div>

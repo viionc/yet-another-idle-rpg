@@ -11,5 +11,7 @@
         "gold": "Gold",
         "goldMultiplier": "Gold Multiplier",
         "skillPoints": "Skill points"
-    }
+    },
+    "wave": "Wave",
+    "killCount": "Kill count"
 }

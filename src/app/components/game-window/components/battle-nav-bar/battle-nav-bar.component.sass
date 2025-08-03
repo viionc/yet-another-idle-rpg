@@ -1,0 +1,39 @@
+@use '../../../../../styles/palette' as palette
+@use '../../../../../styles/_variables' as vars
+
+.battle-nav-bar
+    height: 4rem
+    background: rgba(0, 0, 0, 0.5)
+    width: 100%
+    display: flex
+    justify-content: space-between
+    padding: 0.3rem
+
+.zone
+    font-size: 1.1rem
+    font-weight: 400
+    margin-bottom: 0.5rem
+
+.killcount
+    font-size: 0.9rem
+    font-weight: 400
+
+.buttons
+    display: flex
+    align-items: center
+    gap: 0.5rem
+    height: 2rem
+
+    span
+        font-size: 1.2rem
+
+    button
+        height: 2rem
+        width: 2rem
+        border: 1px solid palette.$yellow
+        background-color: vars.$panelBackgroundColor
+        opacity: 0.8
+        border-radius: vars.$panelBorderRadius
+        color: palette.$yellow
+        font-size: 1.5rem
+        cursor: pointer

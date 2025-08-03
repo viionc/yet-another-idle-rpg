@@ -1,0 +1,13 @@
+<div class="battle-nav-bar">
+    <div>
+        <h2 class="zone">{{ 'zones:names.' + ZoneID[currentZone?.id] | i18next }} <ng-container *ngIf="currentEnemy">-
+                {{ 'enemies:names.' +
+                EnemyID[currentEnemy.id] | i18next }}</ng-container></h2>
+        <h3 class="killcount"> {{ 'killCount' | i18next }}: {{ killCount }}</h3>
+    </div>
+    <div class="buttons">
+        <button *ngIf="currentWave !== 1" (click)="onPreviousWave.emit()">&lt;</button>
+        <span>{{ 'wave' | i18next }}: {{ currentWave }}/{{ currentZone.maxWave }}</span>
+        <button *ngIf="currentWave !== currentZone.maxWave" (click)="onNextWave.emit()">&gt;</button>
+    </div>
+</div>

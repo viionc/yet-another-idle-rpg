@@ -7,3 +7,4 @@ export const selectCurrentEnemyHp = createSelector(battleFeature.selectBattleSta
 export const selectCurrentEnemy = createSelector(battleFeature.selectBattleState, (state) => state.enemy)
 export const selectCurrentZoneId = createSelector(battleFeature.selectBattleState, (state) => state.currentZone)
 export const selectCurrentZoneData = createSelector(battleFeature.selectBattleState, (state) => ZONES_DATA[state.currentZone])
+export const selectCurrentWave = createSelector(battleFeature.selectBattleState, (state) => state.currentWave)
