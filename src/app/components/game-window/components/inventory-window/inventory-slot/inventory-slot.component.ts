@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { ItemTier } from 'enums/items/item-tier.enum'
 import { Item } from 'interfaces/item.interface'
 
@@ -15,6 +15,8 @@ export class InventoryItemComponent implements OnInit {
     @Input() item: Item
     @Input() amount: number
     @Input() tier: ItemTier
+
+    @Output() equipItem = new EventEmitter<void>()
 
     ItemTier = ItemTier
 

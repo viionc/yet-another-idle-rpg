@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { switchMap, withLatestFrom } from 'rxjs'
+import { EMPTY, switchMap, withLatestFrom } from 'rxjs'
 import { selectPlayerStats } from '../player'
 import { Store } from '@ngrx/store'
 import { battleEndedAction } from '../battle/battle.actions'
 import ENEMIES_DATA from 'data/enemies-data'
 import { PlayerStat } from 'types/player/playerStat.type'
-import { updatePlayerInventoryAction, updatePlayerResourcesAction, updatePlayerStatsAction } from './player.actions'
-import { InventoryItem, ResourceItem } from 'interfaces/item.interface'
+import { equipItemAction, equipItemToSlotAction, updatePlayerInventoryAction, updatePlayerResourcesAction, updatePlayerStatsAction } from './player.actions'
+import { EquipmentItem, InventoryItem, ResourceItem } from 'interfaces/item.interface'
 import ITEM_DATA from 'data/items-data'
 import { Enemy } from 'interfaces/enemy.inteface'
 import { ItemType } from 'enums/items/item-type.enum'
@@ -50,7 +50,30 @@ export class PlayerEffects {
                 return actions
             })
         )
-    );
+    )
+
+    equipItem$ = createEffect(() => this.actions$.pipe(
+        ofType(equipItemAction),
+        switchMap(({ item }) => {
+            const itemData = ITEM_DATA[item.id] as EquipmentItem
+
+            if (!itemData.stats) return EMPTY
+
+            const statsToUpdate: { stat: PlayerStat, amount: number }[] = []
+
+            itemData.stats.forEach(i => {
+                statsToUpdate.push({
+                    stat: i.id,
+                    amount: i.amount,
+                })
+            })
+
+            return [
+                updatePlayerStatsAction({ stats: statsToUpdate }),
+                equipItemToSlotAction({ id: item.id, slot: itemData.slot, tier: item.tier })
+            ]
+        })
+    ))
 
     constructor(
         private actions$: Actions,

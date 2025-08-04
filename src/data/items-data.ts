@@ -44,13 +44,11 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'goldCoinsMultiplier',
-                min: 0.25,
-                max: 0.5,
+                amount: 0.5,
             },
             {
                 id: 'attackPower',
-                min: 1,
-                max: 1,
+                amount: 1,
             },
         ],
     },
@@ -64,8 +62,7 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'attackPower',
-                min: 2,
-                max: 3,
+                amount: 3,
             },
         ],
     },
@@ -79,8 +76,7 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'attackPower',
-                min: 1,
-                max: 1,
+                amount: 1,
             },
         ],
     },
@@ -94,8 +90,7 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'attackPower',
-                min: 1,
-                max: 1,
+                amount: 1,
             },
         ],
     },
@@ -109,8 +104,7 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'attackPower',
-                min: 1,
-                max: 1,
+                amount: 1,
             },
         ],
     },
@@ -124,8 +118,7 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'attackPower',
-                min: 1,
-                max: 1,
+                amount: 1,
             },
         ],
     },
@@ -139,8 +132,7 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'attackPower',
-                min: 1,
-                max: 1,
+                amount: 1,
             },
         ],
     },
@@ -161,8 +153,7 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'attackPower',
-                min: 1,
-                max: 1,
+                amount: 1,
             },
         ],
     },
@@ -176,18 +167,15 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'attackPower',
-                min: 1,
-                max: 1,
+                amount: 1,
             },
             {
                 id: 'attackSpeed',
-                min: 0.1,
-                max: 0.1,
+                amount: 0.1,
             },
             {
                 id: 'xpMultiplier',
-                min: 0.1,
-                max: 0.1,
+                amount: 0.1,
             },
         ],
     },
@@ -270,18 +258,15 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'attackPower',
-                min: 1,
-                max: 2,
+                amount: 1,
             },
             {
                 id: 'critChance',
-                min: 1,
-                max: 2,
+                amount: 2,
             },
             {
                 id: 'goldCoinsMultiplier',
-                min: 0.15,
-                max: 0.3,
+                amount: 0.15,
             },
         ],
     },
@@ -295,13 +280,11 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'attackPower',
-                min: 2,
-                max: 3,
+                amount: 3,
             },
             {
                 id: 'critChance',
-                min: 3,
-                max: 4,
+                amount: 4,
             },
         ],
     },
@@ -315,8 +298,7 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'attackPower',
-                min: 2,
-                max: 2,
+                amount: 2,
             },
         ],
     },
@@ -330,13 +312,11 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'goldCoinsMultiplier',
-                min: 0.25,
-                max: 0.55,
+                amount: 0.5,
             },
             {
                 id: 'xpMultiplier',
-                min: 0.1,
-                max: 0.25,
+                amount: 0.25,
             },
         ],
     },
@@ -350,18 +330,15 @@ const ITEM_DATA: Record<ItemID, Item> = {
         stats: [
             {
                 id: 'attackPower',
-                min: 4,
-                max: 5,
+                amount: 5,
             },
             {
                 id: 'critChance',
-                min: 2,
-                max: 4,
+                amount: 2,
             },
             {
                 id: 'critMulti',
-                min: 0.05,
-                max: 0.25,
+                amount: 0.25,
             },
         ],
     },

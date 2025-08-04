@@ -16,8 +16,7 @@ export interface ItemData {
 
 export interface EquipmentItemPossibleStat {
     id: PlayerStat
-    min: number
-    max: number
+    amount: number
 }
 
 export interface EquipmentItem extends ItemData {

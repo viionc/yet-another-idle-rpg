@@ -2,11 +2,14 @@ import { createReducer, on, State, Action, createFeature } from "@ngrx/store"
 import { PlayerStat } from "../../../types/player/playerStat.type"
 import * as actions from './player.actions'
 import { calculatXp } from 'app/pipe/calculate-xp.pipe'
-import { statsInitialState } from './player'
+import { initialEquipmentState, statsInitialState } from './player'
 import { ZoneID } from 'enums/ids/zone-id.enum'
 import { battleEndedAction } from '../battle/battle.actions'
 import { EquipmentItem, InventoryItem, ResourceItem } from 'interfaces/item.interface'
 import { ItemID } from 'enums/ids/item-id.enum'
+import { EquipmentSlot } from 'enums/equipment-slot.enum'
+import { ItemTier } from 'enums/items/item-tier.enum'
+import ITEM_DATA from 'data/items-data'
 
 export type PlayerStatsType = Record<PlayerStat, number>
 
@@ -15,6 +18,7 @@ interface PlayerState {
     zonesProgression: Partial<Record<ZoneID, Record<number, number>>>
     resources: InventoryItem[]
     inventory: InventoryItem[]
+    equipment: Record<keyof typeof EquipmentSlot, { id: ItemID, tier: ItemTier } | null>
 }
 
 export const initialState: PlayerState = {
@@ -22,6 +26,7 @@ export const initialState: PlayerState = {
     zonesProgression: {},
     resources: [],
     inventory: [],
+    equipment: initialEquipmentState,
 }
 
 const itemIndexFromInventory = (inventory: InventoryItem[] | ResourceItem[], id: ItemID): number => inventory.findIndex(item => item.id === id)
@@ -86,7 +91,17 @@ const reducer = createReducer(
             ...state,
             resources: resourcesState,
         }
-    })
+    }),
+    on(actions.equipItemToSlotAction, (state, { id, slot, tier }) => ({
+        ...state,
+        equipment: {
+            ...state.equipment,
+            [slot]: {
+                id,
+                tier,
+            }
+        }
+    }))
 )
 
 export const playerFeature = createFeature({
