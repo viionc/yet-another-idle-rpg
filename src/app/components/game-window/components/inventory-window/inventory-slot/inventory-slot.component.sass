@@ -1,0 +1,15 @@
+@use '../../../../../../styles/mixins'
+
+.item
+    $self: &
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: space-between
+    height: 100%
+    cursor: pointer
+
+    img
+        object-fit: contain
+
+@include mixins.itemTier('.item')

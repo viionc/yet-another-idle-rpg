@@ -1,3 +1,6 @@
 <div class="inventory">
-    <app-slot *ngFor="let i of slots" />
+    <app-slot *ngFor="let s of slots; let i = index">
+        <app-inventory-slot *ngIf="inventory[i]?.id" [item]="Items[inventory[i].id]" [amount]="inventory[i].amount"
+            [tier]="inventory[i].tier" />
+    </app-slot>
 </div>

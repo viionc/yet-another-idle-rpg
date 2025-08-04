@@ -55,6 +55,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         drops: [
             generateItem(ItemID.crabMeat, 1, 1, 2),
             generateItem(ItemID.stick, 1, 1, 4),
+            generateItem(ItemID.knife, 1, 1, 1),
         ],
         url: './assets/img/enemies/crab.png',
     },

@@ -5,18 +5,26 @@ import { calculatXp } from 'app/pipe/calculate-xp.pipe'
 import { statsInitialState } from './player'
 import { ZoneID } from 'enums/ids/zone-id.enum'
 import { battleEndedAction } from '../battle/battle.actions'
+import { EquipmentItem, InventoryItem, ResourceItem } from 'interfaces/item.interface'
+import { ItemID } from 'enums/ids/item-id.enum'
 
 export type PlayerStatsType = Record<PlayerStat, number>
 
 interface PlayerState {
     stats: PlayerStatsType
     zonesProgression: Partial<Record<ZoneID, Record<number, number>>>
+    resources: InventoryItem[]
+    inventory: InventoryItem[]
 }
 
 export const initialState: PlayerState = {
     stats: statsInitialState,
-    zonesProgression: {}
+    zonesProgression: {},
+    resources: [],
+    inventory: [],
 }
+
+const itemIndexFromInventory = (inventory: InventoryItem[] | ResourceItem[], id: ItemID): number => inventory.findIndex(item => item.id === id)
 
 const reducer = createReducer(
     initialState,
@@ -30,7 +38,55 @@ const reducer = createReducer(
                 [currentWave]: ((state.zonesProgression[zoneId] || {})[currentWave] || 0) + 1,
             }
         }
-    }))
+    })),
+    on(actions.updatePlayerInventoryAction, (state, { items }) => {
+        const inventory = [...state.inventory]
+
+        items.forEach((item) => {
+            const itemIndex = itemIndexFromInventory(inventory, item.id)
+
+            if (itemIndex === -1) {
+                inventory.push(item)
+                return
+            }
+
+            const inventoryItem = inventory[itemIndex]
+
+            inventory[itemIndex] = {
+                ...item,
+                amount: inventoryItem.amount + item.amount
+            }
+        })
+
+        return {
+            ...state,
+            inventory,
+        }
+    }),
+    on(actions.updatePlayerResourcesAction, (state, { resources }) => {
+        const resourcesState = [...state.resources]
+
+        resources.forEach((item) => {
+            const itemIndex = itemIndexFromInventory(resourcesState, item.id)
+
+            if (itemIndex === -1) {
+                resourcesState.push(item)
+                return
+            }
+
+            const resourcesItem = resourcesState[itemIndex]
+
+            resourcesState[itemIndex] = {
+                ...item,
+                amount: resourcesItem.amount + item.amount
+            }
+        })
+
+        return {
+            ...state,
+            resources: resourcesState,
+        }
+    })
 )
 
 export const playerFeature = createFeature({
