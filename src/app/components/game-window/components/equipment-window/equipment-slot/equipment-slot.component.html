@@ -1,0 +1,4 @@
+<div *ngIf="item" class="item" [attr.data-tier]="ItemTier[tier]" (click)="unequipItem.emit(slotName)">
+    <img [ngSrc]="item.url" height="48" width="48" disableOptimizedSrcset alt="">
+</div>
+<div *ngIf="!item" class="slot-name">{{ slotName }}</div>

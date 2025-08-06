@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { AbbreviatePipe } from 'app/pipe/abbreviate.pipe'
 import { CalculateXpPipe } from 'app/pipe/calculate-xp.pipe'
@@ -13,12 +13,8 @@ import { PlayerStatsType } from 'app/store/player/player.reducer'
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class NameComponent implements OnInit {
+export class PlayerStatsComponent {
     @Input() playerStats: PlayerStatsType
 
     Math = Math
-
-    constructor() { }
-
-    ngOnInit() { }
 }

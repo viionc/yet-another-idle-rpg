@@ -1,5 +1,6 @@
 import { createReducer, on, createFeature } from '@ngrx/store'
 import * as actions from './game.actions'
+import { resetStateAction } from '../actions'
 
 export interface GameState {
   tick: number
@@ -13,6 +14,7 @@ export const initialState: GameState = {
 
 const reducer = createReducer(
   initialState,
+  on(resetStateAction, () => initialState),
   on(actions.updateTickAction, (state) => ({
     ...state,
     tick: state.tick + 1

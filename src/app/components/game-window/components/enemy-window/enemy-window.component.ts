@@ -1,5 +1,5 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
+import { NgOptimizedImage } from '@angular/common'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { Enemy } from 'interfaces/enemy.inteface'
 
 @Component({

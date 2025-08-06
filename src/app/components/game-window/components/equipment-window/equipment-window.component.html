@@ -1,0 +1,6 @@
+<section class="equipment-window">
+    <app-slot *ngFor="let slot of equipmentArray">
+        <app-equipment-slot [item]="Items[slot.item?.id]" [tier]="slot.item?.tier" [slotName]="slot.name"
+            (unequipItem)="unequipItem.emit($event)" />
+    </app-slot>
+</section>

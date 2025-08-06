@@ -56,6 +56,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
             generateItem(ItemID.crabMeat, 1, 1, 2),
             generateItem(ItemID.stick, 1, 1, 4),
             generateItem(ItemID.knife, 1, 1, 1),
+            generateItem(ItemID.machete, 1, 1, 1),
         ],
         url: './assets/img/enemies/crab.png',
     },
@@ -67,6 +68,8 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         drops: [
             generateItem(ItemID.feather, 1, 2, 2),
             generateItem(ItemID.stick, 1, 1, 4),
+            generateItem(ItemID.knife, 1, 1, 1),
+            generateItem(ItemID.machete, 1, 1, 1),
         ],
         url: './assets/img/enemies/seagull.png',
     },
@@ -78,6 +81,7 @@ const ENEMIES_DATA: Record<EnemyID, Enemy> = {
         drops: [
             generateItem(ItemID.turtleShell, 1, 1, 3),
             generateItem(ItemID.stick, 1, 1, 4),
+            generateItem(ItemID.knife, 1, 1, 1),
         ],
         url: './assets/img/enemies/turtle.png',
     },

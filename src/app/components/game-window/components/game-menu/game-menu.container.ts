@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { GameMenuComponent } from "./game-menu.component"
 import { selectPlayerStat } from 'app/store/player'
 import { Store } from '@ngrx/store'
@@ -13,7 +13,8 @@ import { tap } from 'rxjs'
             [level]="level$ | async"
         />
     `,
-    imports: [GameMenuComponent, AsyncPipe]
+    imports: [GameMenuComponent, AsyncPipe],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class GameMenuContainer {

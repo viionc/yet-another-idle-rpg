@@ -1,4 +1,4 @@
-import { EquipmentSlot } from 'enums/equipment-slot.enum'
+import { EquipmentSlot, EquipmentSlotKey } from 'enums/equipment-slot.enum'
 import { ItemID } from 'enums/ids/item-id.enum'
 import { ItemTier } from 'enums/items/item-tier.enum'
 import { PlayerStatsType } from './player.reducer'
@@ -39,15 +39,15 @@ export const statsInitialState: PlayerStatsType = {
     currentShopRefreshCooldown: 0,
 }
 
-export const initialEquipmentState: Record<keyof typeof EquipmentSlot, { id: ItemID, tier: ItemTier } | null> = {
-    amulet: null,
-    belt: null,
-    boots: null,
+export const initialEquipmentState: Record<EquipmentSlotKey, { id: ItemID, tier: ItemTier } | null> = {
+    weapon: null,
     cape: null,
-    chest: null,
+    belt: null,
     gloves: null,
     helmet: null,
+    chest: null,
     legs: null,
+    boots: null,
+    amulet: null,
     ring: null,
-    weapon: null,
 }

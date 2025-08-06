@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { EMPTY, switchMap, withLatestFrom } from 'rxjs'
-import { selectPlayerStats } from '../player'
-import { Store } from '@ngrx/store'
+import { switchMap, withLatestFrom } from 'rxjs'
+import { selectPlayerEquipment, selectPlayerStats } from '../player'
+import { Action, Store } from '@ngrx/store'
 import { battleEndedAction } from '../battle/battle.actions'
 import ENEMIES_DATA from 'data/enemies-data'
 import { PlayerStat } from 'types/player/playerStat.type'
-import { equipItemAction, equipItemToSlotAction, updatePlayerInventoryAction, updatePlayerResourcesAction, updatePlayerStatsAction } from './player.actions'
-import { EquipmentItem, InventoryItem, ResourceItem } from 'interfaces/item.interface'
+import { equipItemAction, equipItemToSlotAction, removeItemFromInventoryAction, unequipItemAction, ununequipItemFromSlotAction, updatePlayerInventoryAction, updatePlayerResourcesAction, updatePlayerStatsAction } from './player.actions'
+import { EquipmentItem, InventoryItem } from 'interfaces/item.interface'
 import ITEM_DATA from 'data/items-data'
 import { Enemy } from 'interfaces/enemy.inteface'
 import { ItemType } from 'enums/items/item-type.enum'
+import { EquipmentSlot, EquipmentSlotKey } from 'enums/equipment-slot.enum'
 
 @Injectable()
 export class PlayerEffects {
@@ -32,19 +33,12 @@ export class PlayerEffects {
 
                 const { itemsToUpdate, resourcesToUpdate } = this.calculateEnemyDrops(enemy)
 
-                console.log(itemsToUpdate)
-                console.log(resourcesToUpdate)
-
-
-
                 const actions: any[] = [
                     updatePlayerStatsAction({ stats: statsToUpdate })
                 ]
 
                 if (itemsToUpdate.length) actions.push(updatePlayerInventoryAction({ items: itemsToUpdate }))
                 if (resourcesToUpdate.length) actions.push(updatePlayerResourcesAction({ resources: resourcesToUpdate }))
-
-                console.log(actions)
 
 
                 return actions
@@ -54,23 +48,81 @@ export class PlayerEffects {
 
     equipItem$ = createEffect(() => this.actions$.pipe(
         ofType(equipItemAction),
-        switchMap(({ item }) => {
+        withLatestFrom(this.store.select(selectPlayerEquipment)),
+        switchMap(([{ item }, equipment]) => {
             const itemData = ITEM_DATA[item.id] as EquipmentItem
 
-            if (!itemData.stats) return EMPTY
-
             const statsToUpdate: { stat: PlayerStat, amount: number }[] = []
+            const itemStats = itemData.stats || []
+            const itemToEquipSlot = EquipmentSlot[itemData.slot] as EquipmentSlotKey
 
-            itemData.stats.forEach(i => {
+            itemStats.forEach(i => {
                 statsToUpdate.push({
                     stat: i.id,
                     amount: i.amount,
                 })
             })
 
-            return [
+            const actions: Action[] = [
                 updatePlayerStatsAction({ stats: statsToUpdate }),
-                equipItemToSlotAction({ id: item.id, slot: itemData.slot, tier: item.tier })
+                equipItemToSlotAction({ id: item.id, slot: itemToEquipSlot, tier: item.tier }),
+                removeItemFromInventoryAction({ id: item.id, tier: item.tier }),
+            ]
+
+            let equippedItem = equipment[EquipmentSlot[itemData.slot]]
+
+            if (!equippedItem) return actions
+
+            const type = ITEM_DATA[equippedItem.id].type
+
+            equippedItem = {
+                ...equippedItem,
+                amount: 1,
+                type,
+            }
+
+            const equippedItemStats = ITEM_DATA[equippedItem?.id]?.stats || []
+            equippedItemStats.forEach(i => {
+                statsToUpdate.push({
+                    stat: i.id,
+                    amount: -1 * i.amount,
+                })
+            })
+
+
+            return [
+                ...actions,
+                updatePlayerInventoryAction({ items: [equippedItem] })
+            ]
+        })
+    ))
+
+    unequipItem$ = createEffect(() => this.actions$.pipe(
+        ofType(unequipItemAction),
+        withLatestFrom(this.store.select(selectPlayerEquipment)),
+        switchMap(([{ slot }, equipment]) => {
+            const equippedItem = equipment[slot]
+            const itemData = ITEM_DATA[equippedItem.id]
+
+            const item = {
+                ...equippedItem,
+                amount: 1,
+                type: itemData.type,
+            } as any
+
+            const statsToUpdate: { stat: PlayerStat, amount: number }[] = []
+            const equippedItemStats = ITEM_DATA[item?.id]?.stats || []
+            equippedItemStats.forEach(i => {
+                statsToUpdate.push({
+                    stat: i.id,
+                    amount: -1 * i.amount,
+                })
+            })
+
+            return [
+                updatePlayerInventoryAction({ items: [item] }),
+                ununequipItemFromSlotAction({ slot }),
+                updatePlayerStatsAction({ stats: statsToUpdate }),
             ]
         })
     ))

@@ -4,6 +4,7 @@ import * as actions from './battle.actions'
 import { ZoneID } from 'enums/ids/zone-id.enum'
 import ZONES_DATA from 'data/zones-data'
 import ENEMIES_DATA from 'data/enemies-data'
+import { resetStateAction } from '../actions'
 
 
 export interface BattleState {
@@ -80,6 +81,7 @@ const handleWave = (state: BattleState, next: boolean): BattleState => {
 
 const reducer = createReducer(
     initialState,
+    on(resetStateAction, () => initialState),
     on(actions.startBattleAction, (state) => startBattle(state)),
     on(actions.changeZoneAction, (state, { zoneId }) => ({
         ...state,

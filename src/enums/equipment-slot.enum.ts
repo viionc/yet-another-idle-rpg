@@ -10,3 +10,5 @@ export enum EquipmentSlot {
     gloves = 8,
     belt = 9,
 }
+
+export type EquipmentSlotKey = keyof typeof EquipmentSlot

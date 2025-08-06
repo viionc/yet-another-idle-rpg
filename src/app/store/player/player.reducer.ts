@@ -1,15 +1,15 @@
-import { createReducer, on, State, Action, createFeature } from "@ngrx/store"
+import { createReducer, on, createFeature } from "@ngrx/store"
 import { PlayerStat } from "../../../types/player/playerStat.type"
 import * as actions from './player.actions'
 import { calculatXp } from 'app/pipe/calculate-xp.pipe'
 import { initialEquipmentState, statsInitialState } from './player'
 import { ZoneID } from 'enums/ids/zone-id.enum'
 import { battleEndedAction } from '../battle/battle.actions'
-import { EquipmentItem, InventoryItem, ResourceItem } from 'interfaces/item.interface'
+import { InventoryItem, ResourceItem } from 'interfaces/item.interface'
 import { ItemID } from 'enums/ids/item-id.enum'
-import { EquipmentSlot } from 'enums/equipment-slot.enum'
 import { ItemTier } from 'enums/items/item-tier.enum'
-import ITEM_DATA from 'data/items-data'
+import { resetStateAction } from '../actions'
+import { EquipmentType } from 'interfaces/player/equipment.type'
 
 export type PlayerStatsType = Record<PlayerStat, number>
 
@@ -17,22 +17,23 @@ interface PlayerState {
     stats: PlayerStatsType
     zonesProgression: Partial<Record<ZoneID, Record<number, number>>>
     resources: InventoryItem[]
-    inventory: InventoryItem[]
-    equipment: Record<keyof typeof EquipmentSlot, { id: ItemID, tier: ItemTier } | null>
+    inventory: (InventoryItem | null)[]
+    equipment: EquipmentType
 }
 
 export const initialState: PlayerState = {
     stats: statsInitialState,
     zonesProgression: {},
     resources: [],
-    inventory: [],
+    inventory: new Array(40).fill(null),
     equipment: initialEquipmentState,
 }
 
-const itemIndexFromInventory = (inventory: InventoryItem[] | ResourceItem[], id: ItemID): number => inventory.findIndex(item => item.id === id)
+const itemIndexFromInventory = (inventory: (InventoryItem | null)[] | ResourceItem[], id: ItemID, tier: ItemTier): number => inventory.findIndex(item => item?.id === id && item?.tier === tier)
 
 const reducer = createReducer(
     initialState,
+    on(resetStateAction, () => initialState),
     on(actions.updatePlayerStatsAction, (state, { stats }) => updateStat(state, stats)),
     on(battleEndedAction, (state, { zoneId, currentWave }) => ({
         ...state,
@@ -48,10 +49,13 @@ const reducer = createReducer(
         const inventory = [...state.inventory]
 
         items.forEach((item) => {
-            const itemIndex = itemIndexFromInventory(inventory, item.id)
+            const itemIndex = itemIndexFromInventory(inventory, item.id, item.tier)
+            const emptySlotIndex = inventory.findIndex(i => i === null)
+
+            if (itemIndex !== -1 && emptySlotIndex === -1) return
 
             if (itemIndex === -1) {
-                inventory.push(item)
+                inventory[emptySlotIndex] = item
                 return
             }
 
@@ -72,7 +76,7 @@ const reducer = createReducer(
         const resourcesState = [...state.resources]
 
         resources.forEach((item) => {
-            const itemIndex = itemIndexFromInventory(resourcesState, item.id)
+            const itemIndex = itemIndexFromInventory(resourcesState, item.id, item.tier)
 
             if (itemIndex === -1) {
                 resourcesState.push(item)
@@ -101,7 +105,34 @@ const reducer = createReducer(
                 tier,
             }
         }
-    }))
+    })),
+    on(actions.ununequipItemFromSlotAction, (state, { slot }) => ({
+        ...state,
+        equipment: {
+            ...state.equipment,
+            [slot]: null,
+        }
+    })),
+    on(actions.removeItemFromInventoryAction, (state, { id, tier }) => {
+        const itemIndex = itemIndexFromInventory(state.inventory, id, tier)
+
+        const newInventory = [...state.inventory]
+        const item = newInventory[itemIndex]
+
+        if (item.amount - 1 === 0) {
+            newInventory[itemIndex] = null
+        } else {
+            newInventory[itemIndex] = {
+                ...item,
+                amount: item.amount - 1,
+            }
+        }
+
+        return {
+            ...state,
+            inventory: newInventory,
+        }
+    })
 )
 
 export const playerFeature = createFeature({
