@@ -1,0 +1,26 @@
+@use '../../../../styles/_variables' as vars
+@use '../../../../styles/mixins' as mixins
+
+:host
+    @include mixins.panel
+    width: 100%
+
+.skill-tree-window
+    $gap: 1rem
+    display: flex
+    gap: $gap
+    height: 100%
+    width: 100%
+
+.skill-tree
+    flex: 1 1 calc((100% - 1rem) / 3)
+    border-radius: 14px
+
+    &.damage-tree
+        background-color: rgba(#8f0002, 0.4)
+
+    &.exploration-tree
+        background-color: rgba(#0d542b, 0.5)
+
+    &.magic-tree
+        background-color: rgba(#1c398e, 0.5)

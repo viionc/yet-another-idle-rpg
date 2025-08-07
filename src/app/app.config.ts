@@ -54,7 +54,7 @@ export function i18nextInitializer() {
         backend: {
           loadPath: '/assets/locales/{{lng}}/{{ns}}.json',
         },
-        ns: ['app', 'enemies', 'zones'],
+        ns: ['app', 'enemies', 'zones', 'skill-tree'],
         defaultNS: 'app',
         interpolation: {
           escapeValue: false,

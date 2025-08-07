@@ -1,0 +1,29 @@
+.skill-tree
+    display: flex
+    gap: 1rem
+    flex-direction: column
+
+    &__title
+        text-align: center
+        margin: 0.5rem 0
+
+    &__row
+        display: flex
+        gap: 1rem
+        justify-content: center
+
+    &__node
+        height: 80px
+        width: 80px
+        border-radius: 12px
+        cursor: pointer
+
+        &:hover
+            transform: scale(1.05)
+
+        img
+            object-fit: contain
+            border-radius: 12px
+
+            &.special
+                border-radius: 100%

@@ -1,0 +1,9 @@
+<section class="skill-tree">
+    <h3 class="skill-tree__title">{{ ('skill-tree:skillTreesNames.' + SkillTreeID[skillTreeId]) | i18next}}</h3>
+    <div *ngFor="let skillRow of skillPoints" class="skill-tree__row">
+        <div *ngFor="let skill of skillRow" class="skill-tree__node">
+            @let skillData = AllSkills[skill];
+            <img [src]="skillData.url" height="80" width="80" [class.special]="skillData.special">
+        </div>
+    </div>
+</section>

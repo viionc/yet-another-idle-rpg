@@ -320,10 +320,10 @@ const ITEM_DATA: Record<ItemID, Item> = {
             },
         ],
     },
-    [ItemID.machete]: {
-        id: ItemID.machete,
+    [ItemID.machette]: {
+        id: ItemID.machette,
         tier: ItemTier.uncommon,
-        url: './assets/img/items/machete.png',
+        url: './assets/img/items/machette.png',
         value: 1000,
         type: ItemType.equipment,
         slot: EquipmentSlot.weapon,

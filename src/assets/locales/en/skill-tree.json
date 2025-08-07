@@ -1,0 +1,53 @@
+{
+    "skillTreesNames": {
+        "damage": "Damage",
+        "exploration": "Exploration",
+        "magic": "Magic"
+    },
+    "skillPoints": {
+        "attackPower": {
+            "name": "Attack Power",
+            "desc": ""
+        },
+        "attackSpeed": {
+            "name": "Attack Speed",
+            "desc": ""
+        },
+        "autoWaveProgression": {
+            "name": "Auto Wave Progression",
+            "desc": ""
+        },
+        "haste": {
+            "name": "Haste",
+            "desc": ""
+        },
+        "goldGain": {
+            "name": "Money Maker",
+            "desc": ""
+        },
+        "knowledge": {
+            "name": "Bookworm",
+            "desc": ""
+        },
+        "weaknesses": {
+            "name": "Weaknesses",
+            "desc": ""
+        },
+        "overkill": {
+            "name": "Overkill",
+            "desc": ""
+        },
+        "critChance": {
+            "name": "Crit Chance",
+            "desc": ""
+        },
+        "critMulti": {
+            "name": "Crit Multi",
+            "desc": ""
+        },
+        "doubleAttack": {
+            "name": "Double Attack",
+            "desc": ""
+        }
+    }
+}

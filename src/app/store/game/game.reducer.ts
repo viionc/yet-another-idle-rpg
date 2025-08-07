@@ -1,24 +1,19 @@
 import { createReducer, on, createFeature } from '@ngrx/store'
 import * as actions from './game.actions'
 import { resetStateAction } from '../actions'
+import { GameTab } from 'enums/ids/game-tab.enum'
 
 export interface GameState {
-  tick: number
-  attackSpeed: number
+  gameTab: GameTab
 }
 
 export const initialState: GameState = {
-  tick: 0,
-  attackSpeed: 3,
+  gameTab: GameTab.main
 }
 
 const reducer = createReducer(
   initialState,
   on(resetStateAction, () => initialState),
-  on(actions.updateTickAction, (state) => ({
-    ...state,
-    tick: state.tick + 1
-  }))
 )
 
 export const gameFeature = createFeature({

@@ -1,25 +1,24 @@
-<app-game-menu-container />
+<app-game-menu-container (changeTab)="changeTab($event)" />
 <div class="game-window">
-    <app-panel class="stats-window">
-        <app-player-stats-container />
-    </app-panel>
-    <app-panel class="battle-window">
-        <app-battle-window-container />
-    </app-panel>
-    <app-panel class="equipment-window">
-        <app-equipment-window-container />
-    </app-panel>
+    @let tab = gameTab | async;
+    <app-player-stats-container class="stats-window" />
     <app-panel class="resources-window">
 
     </app-panel>
-    <app-panel class="spells-window">
+    <ng-container *ngIf="tab === GameTab.main">
+        <app-battle-window-container class="battle-window" />
+        <app-equipment-window-container class="equipment-window" />
+        <app-panel class="spells-window">
 
-    </app-panel>
-    <app-panel class="inventory-window">
-        <app-inventory-window-container />
-    </app-panel>
-    <app-panel class="quests-window">
+        </app-panel>
+        <app-inventory-window-container class="inventory-window" />
+        <app-panel class="quests-window">
 
-    </app-panel>
+        </app-panel>
+    </ng-container>
+    <ng-container *ngIf="tab === GameTab.skillTree">
+        <app-skill-tree-window-container class="skill-tree-window" />
+    </ng-container>
+
 </div>
 <button (click)="resetState()">reset state</button>

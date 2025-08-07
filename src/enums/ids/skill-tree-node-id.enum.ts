@@ -1,4 +1,4 @@
-export enum SkillTreeNodeID {
+export enum SkillPointID {
     // Exploration Skill Tree
     autoWaveProgression = 0,
     haste = 1,

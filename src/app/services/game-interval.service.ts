@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { combineLatest, combineLatestWith, Subject, Subscription, tap } from 'rxjs'
-import { selectPlayerAttackSpeed } from '../store/game'
 import { clearInterval, setInterval } from 'worker-timers'
 import { selectCurrentEnemy, selectCurrentWave, selectIsInCombat } from 'app/store/battle'
 import { defaultAttackAction, startBattleAction } from 'app/store/battle/battle.actions'
+import { selectPlayerStat } from 'app/store/player'
 
 const TICK_DURATION_IN_MS = 100
 
@@ -13,7 +13,7 @@ export class GameIntervalService {
     private intervalSub!: Subscription
     private interval!: number
     private keepAlive = new Subject<void>()
-    private attackSpeed$ = this.store.select(selectPlayerAttackSpeed)
+    private attackSpeed$ = this.store.select(selectPlayerStat('attackSpeed'))
     private isInCombat$ = this.store.select(selectIsInCombat)
     private resetBattleTickSub: Subscription
     private battleTick = 0

@@ -1,3 +1,5 @@
+@use './_variables' as vars
+
 @mixin itemTier($container)
     #{$container}
         &[data-tier="trash"]
@@ -17,3 +19,13 @@
 
         &[data-tier="legendary"]
             box-shadow: rgba(255, 152, 25, 0.6) 0px 3px 8px
+
+@mixin panel
+    display: flex
+    height: 100%
+    width: 100%
+    background-color: vars.$panelBackgroundColor
+    border: vars.$panelBorder
+    border-radius: vars.$panelBorderRadius
+    box-shadow: vars.$panelShadow
+    padding: vars.$panelPadding

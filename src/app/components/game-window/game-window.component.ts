@@ -7,19 +7,31 @@ import { Store } from '@ngrx/store'
 import { resetStateAction } from 'app/store/actions'
 import { EquipmentWindowContainer } from "./components/equipment-window/equipment-window.container"
 import { PlayerStatsContainer } from "./components/player-stats/player-stats.container"
+import { BehaviorSubject } from 'rxjs'
+import { GameTab } from 'enums/ids/game-tab.enum'
+import { AsyncPipe, CommonModule } from '@angular/common'
+import { SkillTreeWindowContainer } from "./skill-tree-tab/skill-tree-window.container"
 
 @Component({
     selector: 'app-game-window',
     templateUrl: 'game-window.component.html',
     styleUrls: ['./game-window.component.sass'],
-    imports: [PanelComponent, BattleWindowContainer, GameMenuContainer, InventoryWindowContainer, EquipmentWindowContainer, PlayerStatsContainer],
+    imports: [PanelComponent, BattleWindowContainer, GameMenuContainer, InventoryWindowContainer, EquipmentWindowContainer, PlayerStatsContainer, AsyncPipe, CommonModule, SkillTreeWindowContainer],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class GameWindowComponent {
+    gameTab = new BehaviorSubject<GameTab>(GameTab.main)
+
+    GameTab = GameTab
+
     constructor(private store: Store) { }
 
     resetState() {
         this.store.dispatch(resetStateAction())
+    }
+
+    changeTab(tab: GameTab) {
+        this.gameTab.next(tab)
     }
 }
