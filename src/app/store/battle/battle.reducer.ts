@@ -13,6 +13,7 @@ export interface BattleState {
     currentEnemyHp: number,
     currentZone: ZoneID
     currentWave: number
+    autoWaveProgressionEnabled: boolean
 }
 
 export const initialState: BattleState = {
@@ -21,6 +22,7 @@ export const initialState: BattleState = {
     currentEnemyHp: 0,
     currentZone: ZoneID.horseshoeBeach,
     currentWave: 1,
+    autoWaveProgressionEnabled: false,
 }
 
 const startBattle = (state: BattleState): BattleState => {
@@ -99,6 +101,10 @@ const reducer = createReducer(
     })),
     on(actions.nextWaveAction, (state) => handleWave(state, true)),
     on(actions.previousWaveAction, (state) => handleWave(state, false)),
+    on(actions.enabledAutoWaveProgressionAction, (state, { enabled }) => ({
+        ...state,
+        autoWaveProgressionEnabled: enabled,
+    })),
 )
 
 export const battleFeature = createFeature({

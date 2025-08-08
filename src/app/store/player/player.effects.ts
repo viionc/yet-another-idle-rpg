@@ -10,13 +10,14 @@ import {
     buySkillPointAction,
     equipItemAction,
     equipItemToSlotAction,
+    levelUpSpellAction,
     removeItemFromInventoryAction,
     unequipItemAction,
     unequipItemFromSlotAction,
     updatePlayerInventoryAction,
     updatePlayerResourcesAction,
     updatePlayerStatsAction,
-    updateUnlockedSkillPoints,
+    updateUnlockedSkillPointsAction,
 } from './player.actions'
 import { EquipmentItem, InventoryItem } from 'interfaces/item.interface'
 import ITEM_DATA from 'data/items-data'
@@ -171,10 +172,16 @@ export class PlayerEffects {
                 })
             }
 
-            return [
+            const actions: Action[] = [
                 updatePlayerStatsAction({ stats: statsToUpdate }),
-                updateUnlockedSkillPoints({ id, amount: skillPointBoughtAmount }),
+                updateUnlockedSkillPointsAction({ id, amount: skillPointBoughtAmount }),
             ]
+
+            if (skillPointData.type === SkillPointType.spell) {
+                actions.push(levelUpSpellAction({ id: skillPointData.spellId }))
+            }
+
+            return actions
         }),
     ))
 

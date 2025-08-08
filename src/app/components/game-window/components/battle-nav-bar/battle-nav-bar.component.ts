@@ -17,11 +17,14 @@ import { Zone } from 'interfaces/zone.interface'
 export class BattleNavBarComponent {
     @Input() currentEnemy: Enemy
     @Input() currentZone: Zone
-    @Input() killCount: number
     @Input() currentWave: number
+    @Input() hasAutoWaveProgressionUnlocked: boolean
+    @Input() hasAutoWaveProgressionEnabled: boolean
+    @Input() currentWaveKillCount: number
 
     @Output() onNextWave = new EventEmitter<void>()
     @Output() onPreviousWave = new EventEmitter<void>()
+    @Output() enableAutoWaveProgressionAction = new EventEmitter<boolean>()
 
     readonly ZoneID = ZoneID
     readonly EnemyID = EnemyID

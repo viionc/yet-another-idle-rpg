@@ -3,24 +3,26 @@ import { PlayerStat } from "../../../types/player/player-stat.type"
 import * as actions from './player.actions'
 import { calculateXp } from 'app/pipe/calculate-xp.pipe'
 import { initialEquipmentState, statsInitialState } from './player'
-import { ZoneID } from 'enums/ids/zone-id.enum'
 import { battleEndedAction } from '../battle/battle.actions'
 import { InventoryItem, ResourceItem } from 'interfaces/item.interface'
 import { ItemID } from 'enums/ids/item-id.enum'
 import { ItemTier } from 'enums/items/item-tier.enum'
 import { resetStateAction } from '../actions'
 import { EquipmentType } from 'interfaces/player/equipment.type'
-import { SkillPointID } from '../../../enums/ids/skill-tree-node-id.enum';
+import { ZonesProgression } from '../../../types/player/zones-progression.type';
+import { UnlockedSkillPoints } from '../../../types/player/unlocked-skill-points.type';
+import { UnlockedSpellsType } from '../../../types/player/unlocked-spells.type';
 
 export type PlayerStatsType = Record<PlayerStat, number>
 
 interface PlayerState {
     stats: PlayerStatsType
-    zonesProgression: Partial<Record<ZoneID, Record<number, number>>>
+    zonesProgression: ZonesProgression
     resources: InventoryItem[]
     inventory: (InventoryItem | null)[]
     equipment: EquipmentType
-    unlockedSkillPoints: Partial<Record<SkillPointID, number>>
+    unlockedSkillPoints: UnlockedSkillPoints
+    unlockedSpells: UnlockedSpellsType
 }
 
 export const initialState: PlayerState = {
@@ -30,6 +32,7 @@ export const initialState: PlayerState = {
     inventory: new Array(40).fill(null),
     equipment: initialEquipmentState,
     unlockedSkillPoints: {},
+    unlockedSpells: {},
 }
 
 const itemIndexFromInventory = (inventory: (InventoryItem | null)[] | ResourceItem[], id: ItemID, tier: ItemTier): number => inventory.findIndex(item => item?.id === id && item?.tier === tier)
@@ -136,11 +139,18 @@ const reducer = createReducer(
             inventory: newInventory,
         }
     }),
-    on(actions.updateUnlockedSkillPoints, (state, { id, amount }) => ({
+    on(actions.updateUnlockedSkillPointsAction, (state, { id, amount }) => ({
         ...state,
         unlockedSkillPoints: {
             ...state.unlockedSkillPoints,
             [id]: (state.unlockedSkillPoints[id] || 0) + amount,
+        },
+    })),
+    on(actions.levelUpSpellAction, (state, { id }) => ({
+        ...state,
+        unlockedSpells: {
+            ...state.unlockedSpells,
+            [id]: (state.unlockedSpells[id] || 0) + 1,
         },
     })),
 )
