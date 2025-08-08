@@ -4,7 +4,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
     selector: 'app-spinner',
     templateUrl: 'spinner.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrls: ['./spinner.component.sass']
+    styleUrls: ['./spinner.component.sass'],
 })
 
-export class SpinnerComponent { }
+export class SpinnerComponent {
+}

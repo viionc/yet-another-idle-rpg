@@ -9,7 +9,7 @@ import { EquipmentSlotKey } from 'enums/equipment-slot.enum'
 @Component({
     selector: 'app-equipment-window-container',
     template: `
-        <app-equipment-window 
+        <app-equipment-window
             [equipment]="equipment$ | async"
             (unequipItem)="unequipItem($event)"
         />
@@ -21,7 +21,8 @@ import { EquipmentSlotKey } from 'enums/equipment-slot.enum'
 export class EquipmentWindowContainer {
     equipment$ = this.store.select(selectPlayerEquipment)
 
-    constructor(private store: Store) { }
+    constructor(private store: Store) {
+    }
 
     unequipItem(slot: EquipmentSlotKey) {
         this.store.dispatch(unequipItemAction({ slot }))

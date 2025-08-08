@@ -24,15 +24,20 @@ export class BattleEffects {
 
                 const actions: any[] = [updateEnemyHpAction({ newHp: hpAfterDamage <= 0 ? 0 : hpAfterDamage })]
 
-                if (isDead) actions.push(battleEndedAction({ enemyId: currentEnemy.id, zoneId: currentZoneId, currentWave }))
+                if (isDead) actions.push(battleEndedAction({
+                    enemyId: currentEnemy.id,
+                    zoneId: currentZoneId,
+                    currentWave,
+                }))
 
                 return actions
-            })
-        )
+            }),
+        ),
     );
 
     constructor(
         private actions$: Actions,
         private store: Store,
-    ) { }
+    ) {
+    }
 }

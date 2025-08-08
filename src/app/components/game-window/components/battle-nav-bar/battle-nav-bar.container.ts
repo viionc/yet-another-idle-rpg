@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { BattleNavBarComponent } from "./battle-nav-bar.component"
-import { Enemy } from 'interfaces/enemy.inteface'
+import { Enemy } from 'interfaces/enemy.interface'
 import { Zone } from 'interfaces/zone.interface'
 import { selectCurrentWave } from 'app/store/battle'
 import { of, switchMap } from 'rxjs'
@@ -11,14 +11,15 @@ import { nextWaveAction, previousWaveAction } from 'app/store/battle/battle.acti
 
 @Component({
     selector: 'app-battle-nav-bar-container',
-    template: `<app-battle-nav-bar 
-        [currentEnemy]="currentEnemy"
-        [currentZone]="currentZone"
-        [killCount]="killCount$ | async"
-        [currentWave]="currentWave$ | async"
-        (onNextWave)="onNextWave()"
-        (onPreviousWave)="onPreviousWave()"
-    />`,
+    template: `
+        <app-battle-nav-bar
+            [currentEnemy]="currentEnemy"
+            [currentZone]="currentZone"
+            [killCount]="killCount$ | async"
+            [currentWave]="currentWave$ | async"
+            (onNextWave)="onNextWave()"
+            (onPreviousWave)="onPreviousWave()"
+        />`,
     imports: [BattleNavBarComponent, AsyncPipe]
 })
 
@@ -35,7 +36,8 @@ export class BattleNavBarContainer {
         })
     )
 
-    constructor(private store: Store) { }
+    constructor(private store: Store) {
+    }
 
     onNextWave() {
         console.log('test')

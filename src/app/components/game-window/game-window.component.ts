@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { PanelComponent } from '../shared/panel/panel.component'
 import { BattleWindowContainer } from "./components/battle-window/battle-window.container"
 import { GameMenuContainer } from "./components/game-menu/game-menu.container"
@@ -12,11 +12,23 @@ import { GameTab } from 'enums/ids/game-tab.enum'
 import { AsyncPipe, CommonModule } from '@angular/common'
 import { SkillTreeWindowContainer } from "./skill-tree-tab/skill-tree-window.container"
 
+const imports = [
+    PanelComponent,
+    BattleWindowContainer,
+    GameMenuContainer,
+    InventoryWindowContainer,
+    EquipmentWindowContainer,
+    PlayerStatsContainer,
+    AsyncPipe,
+    CommonModule,
+    SkillTreeWindowContainer,
+]
+
 @Component({
     selector: 'app-game-window',
     templateUrl: 'game-window.component.html',
     styleUrls: ['./game-window.component.sass'],
-    imports: [PanelComponent, BattleWindowContainer, GameMenuContainer, InventoryWindowContainer, EquipmentWindowContainer, PlayerStatsContainer, AsyncPipe, CommonModule, SkillTreeWindowContainer],
+    imports,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -25,7 +37,8 @@ export class GameWindowComponent {
 
     GameTab = GameTab
 
-    constructor(private store: Store) { }
+    constructor(private store: Store) {
+    }
 
     resetState() {
         this.store.dispatch(resetStateAction())

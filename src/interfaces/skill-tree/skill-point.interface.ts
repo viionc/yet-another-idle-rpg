@@ -1,7 +1,7 @@
 import { SkillPointID } from 'enums/ids/skill-tree-node-id.enum'
 import { SpellID } from 'enums/ids/spell-id.enum'
 import { SkillPointType } from 'enums/skill-point-type.enum'
-import { PlayerStat } from 'types/player/playerStat.type'
+import { PlayerStat } from 'types/player/player-stat.type'
 
 export interface SkillPoint {
     id: SkillPointID

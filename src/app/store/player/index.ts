@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store'
 import { playerFeature } from './player.reducer'
-import { PlayerStat } from '../../../types/player/playerStat.type'
+import { PlayerStat } from '../../../types/player/player-stat.type'
 import { ZoneID } from 'enums/ids/zone-id.enum'
 
 export const selectPlayerStats = createSelector(playerFeature.selectPlayerState, (state) => state.stats)

@@ -1,15 +1,24 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { switchMap, withLatestFrom } from 'rxjs'
-import { selectPlayerEquipment, selectPlayerStats } from '../player'
+import { selectPlayerEquipment, selectPlayerStats } from './index'
 import { Action, Store } from '@ngrx/store'
 import { battleEndedAction } from '../battle/battle.actions'
 import ENEMIES_DATA from 'data/enemies-data'
-import { PlayerStat } from 'types/player/playerStat.type'
-import { equipItemAction, equipItemToSlotAction, removeItemFromInventoryAction, unequipItemAction, ununequipItemFromSlotAction, updatePlayerInventoryAction, updatePlayerResourcesAction, updatePlayerStatsAction } from './player.actions'
+import { PlayerStat } from 'types/player/player-stat.type'
+import {
+    equipItemAction,
+    equipItemToSlotAction,
+    removeItemFromInventoryAction,
+    unequipItemAction,
+    unequipItemFromSlotAction,
+    updatePlayerInventoryAction,
+    updatePlayerResourcesAction,
+    updatePlayerStatsAction,
+} from './player.actions'
 import { EquipmentItem, InventoryItem } from 'interfaces/item.interface'
 import ITEM_DATA from 'data/items-data'
-import { Enemy } from 'interfaces/enemy.inteface'
+import { Enemy } from 'interfaces/enemy.interface'
 import { ItemType } from 'enums/items/item-type.enum'
 import { EquipmentSlot, EquipmentSlotKey } from 'enums/equipment-slot.enum'
 
@@ -34,7 +43,7 @@ export class PlayerEffects {
                 const { itemsToUpdate, resourcesToUpdate } = this.calculateEnemyDrops(enemy)
 
                 const actions: any[] = [
-                    updatePlayerStatsAction({ stats: statsToUpdate })
+                    updatePlayerStatsAction({ stats: statsToUpdate }),
                 ]
 
                 if (itemsToUpdate.length) actions.push(updatePlayerInventoryAction({ items: itemsToUpdate }))
@@ -42,8 +51,8 @@ export class PlayerEffects {
 
 
                 return actions
-            })
-        )
+            }),
+        ),
     )
 
     equipItem$ = createEffect(() => this.actions$.pipe(
@@ -92,9 +101,9 @@ export class PlayerEffects {
 
             return [
                 ...actions,
-                updatePlayerInventoryAction({ items: [equippedItem] })
+                updatePlayerInventoryAction({ items: [equippedItem] }),
             ]
-        })
+        }),
     ))
 
     unequipItem$ = createEffect(() => this.actions$.pipe(
@@ -121,16 +130,17 @@ export class PlayerEffects {
 
             return [
                 updatePlayerInventoryAction({ items: [item] }),
-                ununequipItemFromSlotAction({ slot }),
+                unequipItemFromSlotAction({ slot }),
                 updatePlayerStatsAction({ stats: statsToUpdate }),
             ]
-        })
+        }),
     ))
 
     constructor(
         private actions$: Actions,
         private store: Store,
-    ) { }
+    ) {
+    }
 
     calculateEnemyDrops(enemy: Enemy): {
         itemsToUpdate: InventoryItem[]

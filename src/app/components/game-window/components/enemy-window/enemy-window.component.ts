@@ -1,6 +1,6 @@
 import { NgOptimizedImage } from '@angular/common'
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { Enemy } from 'interfaces/enemy.inteface'
+import { Enemy } from 'interfaces/enemy.interface'
 
 @Component({
     imports: [NgOptimizedImage],

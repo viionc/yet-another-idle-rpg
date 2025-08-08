@@ -22,6 +22,9 @@ export class EquipmentWindowComponent implements OnInit {
 
     readonly Items = ITEM_DATA
 
+    constructor() {
+    }
+
     @Input() set equipment(equipment: EquipmentType) {
         this.equipmentArray = Object.entries(equipment).map(([name, item]) => ({
             name,
@@ -29,7 +32,6 @@ export class EquipmentWindowComponent implements OnInit {
         })) as { name: EquipmentSlotKey, item: EquipmentItem }[]
     }
 
-    constructor() { }
-
-    ngOnInit() { }
+    ngOnInit() {
+    }
 }

@@ -1,4 +1,3 @@
-import { SkillTreeWindowComponent } from 'app/components/game-window/skill-tree-tab/skill-tree-window.component'
 import { SkillTreeID } from 'enums/ids/skill-tree-id.enum'
 import { SkillPointID } from 'enums/ids/skill-tree-node-id.enum'
 import { SpellID } from 'enums/ids/spell-id.enum'

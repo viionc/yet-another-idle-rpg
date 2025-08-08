@@ -16,9 +16,11 @@ export class GameMenuComponent implements OnInit {
 
     @Output() changeTab = new EventEmitter<GameTab>()
 
-    GameTab = GameTab
+    readonly GameTab = GameTab
 
-    constructor() { }
+    constructor() {
+    }
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
 }

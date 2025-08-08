@@ -2,11 +2,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 import i18next from 'i18next';
 
 @Pipe({
-  name: 'i18next',
-  pure: false,
+    name: 'i18next',
+    pure: false,
 })
 export class TranslatePipe implements PipeTransform {
-  transform(key: string, options?: any) {
-    return i18next.t(key, options);
-  }
+    transform(key: string, options?: any) {
+        return i18next.t(key, options);
+    }
 }

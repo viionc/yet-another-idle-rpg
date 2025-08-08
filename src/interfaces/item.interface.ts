@@ -3,7 +3,7 @@ import { ItemID } from 'enums/ids/item-id.enum'
 import { ItemTier } from 'enums/items/item-tier.enum'
 import { ItemType } from 'enums/items/item-type.enum'
 import { UsableItemType } from 'enums/usable-item-type.enum'
-import { PlayerStat } from 'types/player/playerStat.type'
+import { PlayerStat } from 'types/player/player-stat.type'
 
 export interface ItemData {
     id: ItemID

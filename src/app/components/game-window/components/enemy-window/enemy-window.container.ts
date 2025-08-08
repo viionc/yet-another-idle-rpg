@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { selectCurrentEnemyHp } from 'app/store/battle'
-import { Enemy } from 'interfaces/enemy.inteface'
+import { Enemy } from 'interfaces/enemy.interface'
 import { EnemyWindowContainerComponent } from "./enemy-window.component"
 import { AsyncPipe } from '@angular/common'
 
 @Component({
     selector: 'app-enemy-window-container',
     template: `
-        <app-enemy-window 
+        <app-enemy-window
             [currentEnemy]="currentEnemy"
             [currentEnemyHp]="currentEnemyHp$ | async"
         />
@@ -21,5 +21,6 @@ export class EnemyWindowContainer {
 
     currentEnemyHp$ = this.store.select(selectCurrentEnemyHp)
 
-    constructor(private store: Store) { }
+    constructor(private store: Store) {
+    }
 }

@@ -1,4 +1,14 @@
-<div class="item" [attr.data-tier]="ItemTier[tier]" (click)="equipItem.emit()">
-    <img [ngSrc]="item.url" height="32" width="32" disableOptimizedSrcset alt="">
-    <span>{{amount}}</span>
+<div
+    (click)="equipItem.emit()"
+    [attr.data-tier]="ItemTier[tier]"
+    class="item"
+>
+    <img
+        [ngSrc]="item.url"
+        alt=""
+        disableOptimizedSrcset
+        height="32"
+        width="32"
+    >
+    <span>{{ amount }}</span>
 </div>

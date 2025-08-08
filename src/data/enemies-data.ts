@@ -1,7 +1,7 @@
 import { DamageElement } from 'enums/damage-element.enum'
 import { EnemyID } from 'enums/ids/enemy-id.enum'
 import { ItemID } from 'enums/ids/item-id.enum'
-import { Enemy } from 'interfaces/enemy.inteface'
+import { Enemy } from 'interfaces/enemy.interface'
 
 const generateItem = (id: ItemID, minAmount: number, maxAmount: number, chance: number) => ({
     id,

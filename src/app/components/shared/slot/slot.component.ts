@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 @Component({
     selector: 'app-slot',
@@ -7,8 +7,5 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
     styleUrls: ['./slot.component.sass']
 })
 
-export class SlotComponent implements OnInit {
-    constructor() { }
-
-    ngOnInit() { }
+export class SlotComponent {
 }

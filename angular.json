@@ -29,7 +29,12 @@
             ],
             "styles": [
               "src/styles.sass"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -84,7 +89,12 @@
             ],
             "styles": [
               "src/styles.sass"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            }
           }
         }
       }

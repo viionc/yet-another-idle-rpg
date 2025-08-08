@@ -1,7 +1,7 @@
-import { createReducer, on, createFeature } from "@ngrx/store"
-import { PlayerStat } from "../../../types/player/playerStat.type"
+import { createFeature, createReducer, on } from "@ngrx/store"
+import { PlayerStat } from "../../../types/player/player-stat.type"
 import * as actions from './player.actions'
-import { calculatXp } from 'app/pipe/calculate-xp.pipe'
+import { calculateXp } from 'app/pipe/calculate-xp.pipe'
 import { initialEquipmentState, statsInitialState } from './player'
 import { ZoneID } from 'enums/ids/zone-id.enum'
 import { battleEndedAction } from '../battle/battle.actions'
@@ -42,8 +42,8 @@ const reducer = createReducer(
             [zoneId]: {
                 ...state.zonesProgression[zoneId],
                 [currentWave]: ((state.zonesProgression[zoneId] || {})[currentWave] || 0) + 1,
-            }
-        }
+            },
+        },
     })),
     on(actions.updatePlayerInventoryAction, (state, { items }) => {
         const inventory = [...state.inventory]
@@ -63,7 +63,7 @@ const reducer = createReducer(
 
             inventory[itemIndex] = {
                 ...item,
-                amount: inventoryItem.amount + item.amount
+                amount: inventoryItem.amount + item.amount,
             }
         })
 
@@ -87,7 +87,7 @@ const reducer = createReducer(
 
             resourcesState[itemIndex] = {
                 ...item,
-                amount: resourcesItem.amount + item.amount
+                amount: resourcesItem.amount + item.amount,
             }
         })
 
@@ -103,15 +103,15 @@ const reducer = createReducer(
             [slot]: {
                 id,
                 tier,
-            }
-        }
+            },
+        },
     })),
-    on(actions.ununequipItemFromSlotAction, (state, { slot }) => ({
+    on(actions.unequipItemFromSlotAction, (state, { slot }) => ({
         ...state,
         equipment: {
             ...state.equipment,
             [slot]: null,
-        }
+        },
     })),
     on(actions.removeItemFromInventoryAction, (state, { id, tier }) => {
         const itemIndex = itemIndexFromInventory(state.inventory, id, tier)
@@ -132,7 +132,7 @@ const reducer = createReducer(
             ...state,
             inventory: newInventory,
         }
-    })
+    }),
 )
 
 export const playerFeature = createFeature({
@@ -141,7 +141,7 @@ export const playerFeature = createFeature({
 })
 
 const handleExperience = (stats: PlayerStatsType) => {
-    const xpForNextLevel = calculatXp(stats.level + 1)
+    const xpForNextLevel = calculateXp(stats.level + 1)
 
     if (stats.experience < xpForNextLevel) return
 

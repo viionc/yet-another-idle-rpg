@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { TranslatePipe } from 'app/pipe/i18next.pipe'
 import { EnemyID } from 'enums/ids/enemy-id.enum'
 import { ZoneID } from 'enums/ids/zone-id.enum'
-import { Enemy } from 'interfaces/enemy.inteface'
+import { Enemy } from 'interfaces/enemy.interface'
 import { Zone } from 'interfaces/zone.interface'
 
 @Component({
@@ -26,5 +26,6 @@ export class BattleNavBarComponent {
     readonly ZoneID = ZoneID
     readonly EnemyID = EnemyID
 
-    constructor() { }
+    constructor() {
+    }
 }

@@ -16,5 +16,5 @@ import { PlayerStatsType } from 'app/store/player/player.reducer'
 export class PlayerStatsComponent {
     @Input() playerStats: PlayerStatsType
 
-    Math = Math
+    readonly Math = Math
 }

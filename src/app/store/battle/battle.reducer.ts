@@ -1,5 +1,5 @@
-import { createReducer, on, createFeature } from '@ngrx/store'
-import { Enemy } from 'interfaces/enemy.inteface'
+import { createFeature, createReducer, on } from '@ngrx/store'
+import { Enemy } from 'interfaces/enemy.interface'
 import * as actions from './battle.actions'
 import { ZoneID } from 'enums/ids/zone-id.enum'
 import ZONES_DATA from 'data/zones-data'
@@ -26,7 +26,7 @@ export const initialState: BattleState = {
 const startBattle = (state: BattleState): BattleState => {
     console.log('battleStarted')
     const zoneData = ZONES_DATA[state.currentZone]
-    let enemy = null
+    let enemy: Enemy
 
     if (state.currentWave !== zoneData.maxWave) {
         const possibleEnemies = ZONES_DATA[state.currentZone].enemies
@@ -60,7 +60,7 @@ const handleWave = (state: BattleState, next: boolean): BattleState => {
             enemy: null,
             isInCombat: false,
             currentWave: wave,
-            currentZone: shouldGoNextZone ? nextZone : state.currentZone
+            currentZone: shouldGoNextZone ? nextZone : state.currentZone,
         }
     }
 
@@ -75,7 +75,7 @@ const handleWave = (state: BattleState, next: boolean): BattleState => {
         enemy: null,
         isInCombat: false,
         currentWave: wave,
-        currentZone: shouldGoPreviousZone ? previousZoneId : state.currentZone
+        currentZone: shouldGoPreviousZone ? previousZoneId : state.currentZone,
     }
 }
 
@@ -98,7 +98,7 @@ const reducer = createReducer(
         isInCombat: false,
     })),
     on(actions.nextWaveAction, (state) => handleWave(state, true)),
-    on(actions.previousWaveAction, (state) => handleWave(state, false))
+    on(actions.previousWaveAction, (state) => handleWave(state, false)),
 )
 
 export const battleFeature = createFeature({

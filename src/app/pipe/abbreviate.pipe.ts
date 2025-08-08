@@ -7,8 +7,8 @@ import { abbreviateNumber } from 'js-abbreviation-number'
 })
 export class AbbreviatePipe implements PipeTransform {
     private readonly symbols = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No']
-    transform(number: number) {
 
+    transform(number: number) {
         return abbreviateNumber(number, 2, { symbols: this.symbols })
     }
 }

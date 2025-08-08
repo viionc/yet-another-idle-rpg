@@ -1,8 +1,22 @@
 <nav class="game-menu">
     <ul class="game-menu__tabs">
-        <li class="game-menu__tab" (click)="changeTab.emit(GameTab.main)">Battle</li>
-        <li *ngIf="level > 1" class="game-menu__tab" (click)="changeTab.emit(GameTab.skillTree)">Skill Tree <span
-                *ngIf="skillPoints" class="skill-point">({{
-                skillPoints }})</span></li>
+        <li
+            (click)="changeTab.emit(GameTab.main)"
+            class="game-menu__tab"
+        >Battle
+        </li>
+        @if (level > 1) {
+            <li
+                class="game-menu__tab"
+                (click)="changeTab.emit(GameTab.skillTree)"
+            >Skill Tree
+                @if (skillPoints) {
+                    <span
+                        class="skill-point"
+                    >({{ skillPoints }})</span>
+                }
+            </li>
+        }
+
     </ul>
 </nav>

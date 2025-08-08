@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
 import { UrlPipe } from 'app/pipe/url.pipe'
-import { Enemy } from 'interfaces/enemy.inteface'
+import { Enemy } from 'interfaces/enemy.interface'
 import { Zone } from 'interfaces/zone.interface'
 import { SpinnerComponent } from "app/components/shared/spinner/spinner.component"
 import { EnemyWindowContainer } from '../enemy-window/enemy-window.container'
@@ -20,7 +20,9 @@ export class BattleWindowComponent implements OnInit {
     @Input() isInCombat: boolean
     @Input() currentEnemy: Enemy
 
-    constructor() { }
+    constructor() {
+    }
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
 }

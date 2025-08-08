@@ -1,6 +1,12 @@
 <section class="equipment-window">
-    <app-slot *ngFor="let slot of equipmentArray">
-        <app-equipment-slot [item]="Items[slot.item?.id]" [tier]="slot.item?.tier" [slotName]="slot.name"
-            (unequipItem)="unequipItem.emit($event)" />
-    </app-slot>
+    @for (slot of equipmentArray; track slot.name) {
+        <app-slot>
+            <app-equipment-slot
+                (unequipItem)="unequipItem.emit($event)"
+                [item]="Items[slot.item?.id]"
+                [slotName]="slot.name"
+                [tier]="slot.item?.tier"
+            />
+        </app-slot>
+    }
 </section>

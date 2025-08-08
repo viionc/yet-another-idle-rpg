@@ -8,11 +8,11 @@ import { PanelComponent } from "app/components/shared/panel/panel.component"
 @Component({
     selector: 'app-player-stats-container',
     template: `
-    <app-panel>
-        <app-player-stats
-            [playerStats]="playerStats$ | async"
-        />
-    </app-panel>`,
+        <app-panel>
+            <app-player-stats
+                [playerStats]="playerStats$ | async"
+            />
+        </app-panel>`,
     imports: [AsyncPipe, PlayerStatsComponent, PanelComponent],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -20,7 +20,9 @@ import { PanelComponent } from "app/components/shared/panel/panel.component"
 export class PlayerStatsContainer implements OnInit {
     playerStats$ = this.store.select(selectPlayerStats)
 
-    constructor(private store: Store) { }
+    constructor(private store: Store) {
+    }
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
 }

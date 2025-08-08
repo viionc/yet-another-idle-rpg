@@ -8,7 +8,7 @@ import { Item } from 'interfaces/item.interface'
     templateUrl: 'inventory-slot.component.html',
     styleUrls: ['./inventory-slot.component.sass'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgOptimizedImage]
+    imports: [NgOptimizedImage],
 })
 
 export class InventoryItemComponent implements OnInit {
@@ -18,9 +18,11 @@ export class InventoryItemComponent implements OnInit {
 
     @Output() equipItem = new EventEmitter<void>()
 
-    ItemTier = ItemTier
+    readonly ItemTier = ItemTier
 
-    constructor() { }
+    constructor() {
+    }
 
-    ngOnInit() { }
+    ngOnInit() {
+    }
 }

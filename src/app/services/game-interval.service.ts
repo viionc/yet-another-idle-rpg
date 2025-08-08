@@ -19,13 +19,16 @@ export class GameIntervalService {
     private battleTick = 0
     private tick = 0
 
-    constructor(private store: Store) { }
+    constructor(private store: Store) {
+    }
 
     initInterval() {
         if (this.intervalSub) return
 
         // start interval using worker-timers so the interval keeps going when user switches to a different tab in browser
-        this.interval = setInterval(() => { this.keepAlive.next() }, TICK_DURATION_IN_MS)
+        this.interval = setInterval(() => {
+            this.keepAlive.next()
+        }, TICK_DURATION_IN_MS)
         this.intervalSub = this.keepAlive.pipe(
             combineLatestWith(
                 this.attackSpeed$,
@@ -53,7 +56,7 @@ export class GameIntervalService {
 
         this.resetBattleTickSub = combineLatest([
             this.store.select(selectCurrentWave),
-            this.store.select(selectCurrentEnemy)
+            this.store.select(selectCurrentEnemy),
         ]).subscribe(() => this.battleTick = 0)
 
     }

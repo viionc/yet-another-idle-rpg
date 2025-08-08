@@ -9,7 +9,7 @@ import { InventoryItem } from 'interfaces/item.interface'
 @Component({
     selector: 'app-inventory-window-container',
     template: `
-        <app-inventory-window 
+        <app-inventory-window
             [inventory]="inventory$ | async"
             (equipItem)="equipItem($event)"
         />
@@ -20,7 +20,8 @@ import { InventoryItem } from 'interfaces/item.interface'
 export class InventoryWindowContainer {
     inventory$ = this.store.select(selectPlayerInventory)
 
-    constructor(private store: Store) { }
+    constructor(private store: Store) {
+    }
 
     equipItem(item: InventoryItem) {
         this.store.dispatch(equipItemAction({ item }))

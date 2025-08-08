@@ -20,5 +20,6 @@ export class SkillTreeComponent {
     readonly AllSkills = ALL_SKILLS
     readonly SkillTreeID = SkillTreeID
 
-    constructor() { }
+    constructor() {
+    }
 }
