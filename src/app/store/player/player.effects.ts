@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { switchMap, withLatestFrom } from 'rxjs'
-import { selectPlayerEquipment, selectPlayerStats } from './index'
+import { selectPlayerEquipment, selectPlayerStat, selectPlayerStats, selectUnlockedSkillPoints } from './index'
 import { Action, Store } from '@ngrx/store'
 import { battleEndedAction } from '../battle/battle.actions'
 import ENEMIES_DATA from 'data/enemies-data'
 import { PlayerStat } from 'types/player/player-stat.type'
 import {
+    buySkillPointAction,
     equipItemAction,
     equipItemToSlotAction,
     removeItemFromInventoryAction,
@@ -15,12 +16,15 @@ import {
     updatePlayerInventoryAction,
     updatePlayerResourcesAction,
     updatePlayerStatsAction,
+    updateUnlockedSkillPoints,
 } from './player.actions'
 import { EquipmentItem, InventoryItem } from 'interfaces/item.interface'
 import ITEM_DATA from 'data/items-data'
 import { Enemy } from 'interfaces/enemy.interface'
 import { ItemType } from 'enums/items/item-type.enum'
 import { EquipmentSlot, EquipmentSlotKey } from 'enums/equipment-slot.enum'
+import { ALL_SKILLS } from '../../../data/skill-tree-data';
+import { SkillPointType } from '../../../enums/skill-point-type.enum';
 
 @Injectable()
 export class PlayerEffects {
@@ -136,6 +140,44 @@ export class PlayerEffects {
         }),
     ))
 
+    buySkillPoint$ = createEffect(() => this.actions$.pipe(
+        ofType(buySkillPointAction),
+        withLatestFrom(
+            this.store.select(selectPlayerStat('unspentSkillPoints')),
+            this.store.select(selectUnlockedSkillPoints),
+        ),
+        switchMap(([{ id, buyMax }, unspentSkillPoints, unlockedSkillPoints]) => {
+            const skillPointData = ALL_SKILLS[id]
+            const skillMaxLevel = skillPointData.maxLevel
+            const currentLevel = unlockedSkillPoints[id] || 0
+            const skillPointCost = skillPointData.skillPointCost
+
+            if (unspentSkillPoints < skillPointCost) return []
+
+            if (currentLevel >= skillMaxLevel) return []
+
+            const skillPointsLeftToUnlock = skillMaxLevel - currentLevel
+            const skillPointBoughtAmount = buyMax ? Math.min(skillPointsLeftToUnlock, unspentSkillPoints) : 1
+            const totalCost = skillPointBoughtAmount * skillPointCost
+
+            const statsToUpdate: { stat: PlayerStat, amount: number }[] = [
+                { stat: 'unspentSkillPoints', amount: -1 * totalCost },
+            ]
+
+            if (skillPointData.type === SkillPointType.stat) {
+                statsToUpdate.push({
+                    stat: skillPointData.stat,
+                    amount: skillPointData.statAmount * skillPointBoughtAmount,
+                })
+            }
+
+            return [
+                updatePlayerStatsAction({ stats: statsToUpdate }),
+                updateUnlockedSkillPoints({ id, amount: skillPointBoughtAmount }),
+            ]
+        }),
+    ))
+
     constructor(
         private actions$: Actions,
         private store: Store,
@@ -172,9 +214,7 @@ export class PlayerEffects {
                     break
                 default:
                 // do nothing
-
             }
-
         }
 
         return {

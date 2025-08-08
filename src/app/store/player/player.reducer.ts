@@ -10,6 +10,7 @@ import { ItemID } from 'enums/ids/item-id.enum'
 import { ItemTier } from 'enums/items/item-tier.enum'
 import { resetStateAction } from '../actions'
 import { EquipmentType } from 'interfaces/player/equipment.type'
+import { SkillPointID } from '../../../enums/ids/skill-tree-node-id.enum';
 
 export type PlayerStatsType = Record<PlayerStat, number>
 
@@ -19,6 +20,7 @@ interface PlayerState {
     resources: InventoryItem[]
     inventory: (InventoryItem | null)[]
     equipment: EquipmentType
+    unlockedSkillPoints: Partial<Record<SkillPointID, number>>
 }
 
 export const initialState: PlayerState = {
@@ -27,6 +29,7 @@ export const initialState: PlayerState = {
     resources: [],
     inventory: new Array(40).fill(null),
     equipment: initialEquipmentState,
+    unlockedSkillPoints: {},
 }
 
 const itemIndexFromInventory = (inventory: (InventoryItem | null)[] | ResourceItem[], id: ItemID, tier: ItemTier): number => inventory.findIndex(item => item?.id === id && item?.tier === tier)
@@ -133,6 +136,13 @@ const reducer = createReducer(
             inventory: newInventory,
         }
     }),
+    on(actions.updateUnlockedSkillPoints, (state, { id, amount }) => ({
+        ...state,
+        unlockedSkillPoints: {
+            ...state.unlockedSkillPoints,
+            [id]: (state.unlockedSkillPoints[id] || 0) + amount,
+        },
+    })),
 )
 
 export const playerFeature = createFeature({

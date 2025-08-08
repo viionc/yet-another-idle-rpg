@@ -3,15 +3,17 @@
     @for (skillRow of skillPoints; track $index) {
         <div class="skill-tree__row">
             @for (skill of skillRow; track skill) {
-                <div class="skill-tree__node">
-                    @let skillData = AllSkills[skill];
-                    <img
-                        height="80"
-                        width="80"
-                        alt=""
-                        [src]="skillData.url"
-                        [class.special]="skillData.special"
-                    >
+                @let skillData = AllSkills[skill];
+                <div
+                    class="skill-tree__node"
+                    [class.special]="skillData.special"
+                    [style]="{ 'background-image': skillData.url | url }"
+                    (click)="handleBuySkillPoint(skill, $event)"
+                >
+                    <div class="skill-tree__info">
+                        <span>{{ unlockedSkillPoints[skill] || 0 }} / {{ skillData.maxLevel }}</span>
+                        <span>{{ 'skill-tree:cost' | i18next: { amount: skillData.skillPointCost } }}</span>
+                    </div>
                 </div>
             }
         </div>

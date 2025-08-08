@@ -11,6 +11,8 @@ import { BehaviorSubject } from 'rxjs'
 import { GameTab } from 'enums/ids/game-tab.enum'
 import { AsyncPipe, CommonModule } from '@angular/common'
 import { SkillTreeWindowContainer } from "./skill-tree-tab/skill-tree-window.container"
+import { updatePlayerStatsAction } from '../../store/player/player.actions';
+import { PlayerStat } from '../../../types/player/player-stat.type';
 
 const imports = [
     PanelComponent,
@@ -46,5 +48,9 @@ export class GameWindowComponent {
 
     changeTab(tab: GameTab) {
         this.gameTab.next(tab)
+    }
+
+    giveStat(stat: PlayerStat) {
+        this.store.dispatch(updatePlayerStatsAction({ stats: [{ stat, amount: 1000 }] }))
     }
 }

@@ -49,5 +49,6 @@
             "name": "Double Attack",
             "desc": ""
         }
-    }
+    },
+    "cost": "{{ amount }} SP"
 }

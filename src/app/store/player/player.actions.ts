@@ -4,6 +4,7 @@ import { InventoryItem } from 'interfaces/item.interface'
 import { EquipmentSlotKey } from 'enums/equipment-slot.enum'
 import { ItemID } from 'enums/ids/item-id.enum'
 import { ItemTier } from 'enums/items/item-tier.enum'
+import { SkillPointID } from '../../../enums/ids/skill-tree-node-id.enum';
 
 // stats
 export const updatePlayerStatsAction = createAction('[Player] Update Stats', props<{
@@ -34,4 +35,12 @@ export const equipItemToSlotAction = createAction('[Player] Equip Item To Slot',
     id: ItemID,
     slot: EquipmentSlotKey,
     tier: ItemTier
+}>())
+export const buySkillPointAction = createAction('[Player] Buy Skill Point', props<{
+    id: SkillPointID,
+    buyMax?: boolean
+}>())
+export const updateUnlockedSkillPoints = createAction('[Player] Update Unlocked Skill Points', props<{
+    id: SkillPointID,
+    amount: number
 }>())

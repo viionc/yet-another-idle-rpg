@@ -1,3 +1,5 @@
+@use 'variables' as vars
+
 .skill-tree
     display: flex
     gap: 1rem
@@ -13,17 +15,28 @@
         justify-content: center
 
     &__node
-        height: 80px
-        width: 80px
+        height: 100px
+        width: 100px
         border-radius: 12px
         cursor: pointer
+        background-size: contain
+        display: flex
+        align-items: center
+        justify-content: center
+
+        &.special
+            border-radius: 100%
 
         &:hover
             transform: scale(1.05)
 
-        img
-            object-fit: contain
-            border-radius: 12px
-
-            &.special
-                border-radius: 100%
+    &__info
+        height: 70px
+        width: 70px
+        border-radius: 8px
+        background-color: rgba(vars.$panelBackgroundColor, 0.7)
+        font-size: 1rem
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-direction: column
