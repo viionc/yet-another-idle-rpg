@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Store } from '@ngrx/store'
-import { combineLatest, combineLatestWith, Subject, Subscription, tap, withLatestFrom } from 'rxjs'
+import { combineLatest, Subject, Subscription, tap, withLatestFrom } from 'rxjs'
 import { clearInterval, setInterval } from 'worker-timers'
 import { selectCurrentEnemy, selectCurrentWave, selectIsInCombat } from 'app/store/battle'
 import { defaultAttackAction, startBattleAction } from 'app/store/battle/battle.actions'
@@ -32,14 +32,17 @@ export class GameIntervalService {
             this.keepAlive.next()
         }, TICK_DURATION_IN_MS)
         this.intervalSub = this.keepAlive.pipe(
-            combineLatestWith(this.attackSpeed$),
-            withLatestFrom(this.isInCombat$),
+            withLatestFrom(
+                this.isInCombat$,
+                this.attackSpeed$,
+            ),
             tap(() => {
                 this.tick += 1
                 this.battleTick += 1
             }),
-        ).subscribe(([[_, attackSpeed], isInCombat]) => {
+        ).subscribe(([_, isInCombat, attackSpeed]) => {
             if (((attackSpeed * 1000) / (this.battleTick * TICK_DURATION_IN_MS) <= 1)) {
+                console.log(this.battleTick * TICK_DURATION_IN_MS)
                 this.battleTick = 0
 
                 if (!isInCombat) {
