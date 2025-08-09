@@ -7,48 +7,73 @@
     "skillPoints": {
         "attackPower": {
             "name": "Attack Power",
-            "desc": ""
+            "desc": "Increases attack power by 1."
         },
         "attackSpeed": {
             "name": "Attack Speed",
-            "desc": ""
+            "desc": "Increases attack speed by 0.1."
         },
         "autoWaveProgression": {
             "name": "Auto Wave Progression",
-            "desc": ""
+            "desc": "Automatically progresses to next wave."
         },
         "haste": {
             "name": "Haste",
-            "desc": ""
+            "desc": "Unlocks a Haste spell."
         },
         "goldGain": {
             "name": "Money Maker",
-            "desc": ""
+            "desc": "Increases gold multiplier by 10%."
         },
         "knowledge": {
             "name": "Bookworm",
-            "desc": ""
+            "desc": "Increases xp gain by 10%."
         },
         "weaknesses": {
             "name": "Weaknesses",
-            "desc": ""
+            "desc": "Allows you to take advantage of enemy weaknesses."
         },
         "overkill": {
-            "name": "Overkill",
-            "desc": ""
+            "name": "Splash",
+            "desc": "10% of damage done is also done to other enemies"
         },
         "critChance": {
             "name": "Crit Chance",
-            "desc": ""
+            "desc": "Increases base crit chance by 2%."
         },
         "critMulti": {
             "name": "Crit Multi",
-            "desc": ""
+            "desc": "Increases crit multiplier by 10%."
         },
         "doubleAttack": {
             "name": "Double Attack",
-            "desc": ""
+            "desc": "Unlocks a Double Attack spell."
+        },
+        "fireStrike": {
+            "name": "Fire Strike",
+            "desc": "Unlocks a Fire Strike spell."
+        },
+        "maxMana": {
+            "name": "Max Mana",
+            "desc": "Increases max mana by 1."
+        },
+        "manaRegen": {
+            "name": "Mana Regen",
+            "desc": "Increases mana regen rate by 2 seconds."
+        },
+        "magicDamage": {
+            "name": "Magic Damage",
+            "desc": "Increases damage of your magic spells by 1."
+        },
+        "spellCrit": {
+            "name": "Spell Crit",
+            "desc": "Your magic spells can crit."
+        },
+        "spellCooldown": {
+            "name": "Spell Cooldown",
+            "desc": "Reduces your spell cooldowns by 2 seconds."
         }
     },
-    "cost": "{{ amount }} SP"
+    "cost": "{{ amount }} SP",
+    "add": "Click to add 1 or Ctrl + Click to add max"
 }

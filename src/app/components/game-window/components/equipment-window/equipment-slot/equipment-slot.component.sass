@@ -11,6 +11,23 @@
     img
         object-fit: contain
 
+    &__tooltip
+        display: flex
+        flex-direction: column
+        gap: 0.4rem
+
+        .tier
+            font-size: .8rem
+            @include mixins.textColorByTier
+
+        .stat
+            font-size: .9rem
+
+        .click
+            margin-top: 0.4rem
+            text-align: center
+            font-size: 0.8rem
+
 .slot-name
     font-size: 0.8rem
     display: flex
@@ -18,4 +35,4 @@
     align-items: center
     height: 100%
 
-@include mixins.itemTier('.item')
+@include mixins.itemShadowByTier('.item')

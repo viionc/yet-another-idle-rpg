@@ -1,4 +1,6 @@
-@use 'palette'
+@use 'palette' as palette
+@use 'mixins' as mixins
+@use 'variables' as vars
 
 *
     margin: 0
@@ -19,3 +21,12 @@ ul
 body
     max-width: 1536px
     margin: 0 auto
+
+    .tooltip-override
+        --tooltip-background-color: #{vars.$panelBackgroundColor} !important
+        --tooltip-text-color: #fff !important
+        --tooltip-border-color: #{palette.$yellow} !important
+        height: fit-content
+        width: fit-content
+        padding: 0
+        max-width: fit-content !important

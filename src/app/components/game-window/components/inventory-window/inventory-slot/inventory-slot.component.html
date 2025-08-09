@@ -1,7 +1,11 @@
 <div
     (click)="equipItem.emit()"
     [attr.data-tier]="ItemTier[tier]"
+    [tooltipContext]="{ item, tier }"
+    [tooltipTemplate]="tooltip"
     class="item"
+    placement="bottom"
+    tooltipClass="tooltip-override"
 >
     <img
         [ngSrc]="item.url"
@@ -12,3 +16,23 @@
     >
     <span>{{ amount }}</span>
 </div>
+
+<ng-template
+    #tooltip
+    let-item="item"
+    let-tier="tier"
+>
+    <div class="item__tooltip">
+        <span>{{ ('items:names.' + ItemID[item.id]) | i18next }}</span>
+        <span
+            [attr.data-tier]="ItemTier[tier]"
+            class="tier"
+        >{{ ('items:tiers.' + ItemTier[tier]) | i18next }}</span>
+        @if (item.type === ItemType.equipment) {
+            @for (stat of $any(item.stats); track stat.id) {
+                <span class="stat">{{ stat.id | statToPercentage:stat.amount }} {{ ('app:playerStats.' + stat.id) | i18next }}</span>
+            }
+            <span class="click">{{ 'items:clickToEquip' | i18next }}</span>
+        }
+    </div>
+</ng-template>

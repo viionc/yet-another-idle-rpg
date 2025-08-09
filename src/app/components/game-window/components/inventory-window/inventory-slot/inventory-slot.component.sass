@@ -12,4 +12,21 @@
     img
         object-fit: contain
 
-@include mixins.itemTier('.item')
+    &__tooltip
+        display: flex
+        flex-direction: column
+        gap: 0.4rem
+
+        .tier
+            font-size: .8rem
+            @include mixins.textColorByTier
+
+        .stat
+            font-size: .9rem
+
+        .click
+            margin-top: 0.4rem
+            text-align: center
+            font-size: 0.8rem
+
+@include mixins.itemShadowByTier('.item')

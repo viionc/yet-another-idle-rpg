@@ -6,8 +6,13 @@
                 @let skillData = AllSkills[skill];
                 <div
                     class="skill-tree__node"
-                    [class.special]="skillData.special"
+                    placement="bottom"
+                    tooltipClass="tooltip-override"
                     [style]="{ 'background-image': skillData.url | url }"
+                    [tooltipTemplate]="tooltip"
+                    [tooltipContext]="skillData"
+                    [autoPlacement]="false"
+                    [class.special]="skillData.special"
                     (click)="handleBuySkillPoint(skill, $event)"
                 >
                     <div class="skill-tree__info">
@@ -19,3 +24,14 @@
         </div>
     }
 </section>
+
+<ng-template
+    #tooltip
+    let-id="id"
+>
+    <div class="skill-tree__tooltip">
+        <span>{{ ('skill-tree:skillPoints.' + SkillPointID[id] + '.name') | i18next }}</span>
+        <span>{{ ('skill-tree:skillPoints.' + SkillPointID[id] + '.desc') | i18next }}</span>
+        <span>{{ 'skill-tree:add' | i18next }}</span>
+    </div>
+</ng-template>

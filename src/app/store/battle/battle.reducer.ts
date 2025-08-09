@@ -53,8 +53,13 @@ const handleWave = (state: BattleState, next: boolean): BattleState => {
 
     if (next) {
         const nextZone = zoneData.nextZoneId
-        const shouldGoNextZone = nextZone && state.currentWave === zoneData.maxWave
-        const wave = shouldGoNextZone ? 1 : state.currentWave + 1
+        const isMaxWave = state.currentWave === zoneData.maxWave
+        const shouldGoNextZone = nextZone && isMaxWave
+        const wave = shouldGoNextZone
+            ? 1
+            : isMaxWave
+                ? zoneData.maxWave
+                : state.currentWave + 1
 
         return {
             ...state,
@@ -68,8 +73,13 @@ const handleWave = (state: BattleState, next: boolean): BattleState => {
 
     const previousZoneId = zoneData.previousZoneId
     const previousZoneData = ZONES_DATA[previousZoneId]
-    const shouldGoPreviousZone = previousZoneId && state.currentWave === 1
-    const wave = shouldGoPreviousZone ? previousZoneData.maxWave : state.currentWave - 1
+    const isFirstWave = state.currentWave === 1
+    const shouldGoPreviousZone = previousZoneId && isFirstWave
+    const wave = shouldGoPreviousZone
+        ? previousZoneData.maxWave
+        : isFirstWave
+            ? state.currentWave
+            : state.currentWave - 1
 
     return {
         ...state,

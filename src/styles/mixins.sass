@@ -1,24 +1,52 @@
 @use 'variables' as vars
+@use 'palette' as palette
+@use 'sass:map'
 
-@mixin itemTier($container)
+@mixin itemShadowByTier($container)
     #{$container}
         &[data-tier="trash"]
-            box-shadow: rgba(180, 180, 180, 0.6) 0 3px 8px
+            box-shadow: rgba(map.get(palette.$itemPalette, trash), 0.6) 0 3px 8px
 
         &[data-tier="normal"]
-            box-shadow: rgba(255, 255, 255, 0.6) 0 3px 8px
+            box-shadow: rgba(map.get(palette.$itemPalette, normal), 0.6) 0 3px 8px
 
         &[data-tier="uncommon"]
-            box-shadow: rgba(60, 179, 113, 0.6) 0 3px 8px
+            box-shadow: rgba(map.get(palette.$itemPalette, uncommon), 0.6) 0 3px 8px
 
         &[data-tier="rare"]
-            box-shadow: rgba(0, 118, 255, 0.6) 0 3px 8px
+            box-shadow: rgba(map.get(palette.$itemPalette, rare), 0.6) 0 3px 8px
 
         &[data-tier="epic"]
-            box-shadow: rgba(179, 64, 255, 0.6) 0 3px 8px
+            box-shadow: rgba(map.get(palette.$itemPalette, epic), 0.6) 0 3px 8px
 
         &[data-tier="legendary"]
-            box-shadow: rgba(255, 152, 25, 0.6) 0 3px 8px
+            box-shadow: rgba(map.get(palette.$itemPalette, legendary), 0.6) 0 3px 8px
+
+        &[data-tier="quest"]
+            box-shadow: rgba(map.get(palette.$itemPalette, quest), 0.6) 0 3px 8px
+
+@mixin textColorByTier
+    &[data-tier="trash"]
+        color: map.get(palette.$itemPalette, trash)
+
+    &[data-tier="normal"]
+        color: map.get(palette.$itemPalette, normal)
+
+    &[data-tier="uncommon"]
+        color: map.get(palette.$itemPalette, uncommon)
+
+    &[data-tier="rare"]
+        color: map.get(palette.$itemPalette, rare)
+
+    &[data-tier="epic"]
+        color: map.get(palette.$itemPalette, epic)
+
+    &[data-tier="legendary"]
+        color: map.get(palette.$itemPalette, legendary)
+
+    &[data-tier="quest"]
+        color: map.get(palette.$itemPalette, quest)
+
 
 @mixin panel
     display: flex

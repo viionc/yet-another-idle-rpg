@@ -1,0 +1,12 @@
+<div class="spells-window">
+    @for (slot of slots; track $index) {
+        <app-slot>
+            @if (spellsArray[$index]) {
+                <app-spell-slot
+                    [spellId]="spellsArray[$index][0]"
+                    [spellLevel]="spellsArray[$index][1]"
+                />
+            }
+        </app-slot>
+    }
+</div>

@@ -5,13 +5,14 @@ import { ALL_SKILLS } from 'data/skill-tree-data'
 import { SkillTreeID } from 'enums/ids/skill-tree-id.enum'
 import { SkillPointID } from 'enums/ids/skill-tree-node-id.enum'
 import { UrlPipe } from '../../../../pipe/url.pipe';
+import { TooltipTemplateDirective } from 'ngx-tooltip-directives';
 
 @Component({
     selector: 'app-skill-tree',
     templateUrl: 'skill-tree.component.html',
     styleUrls: ['./skill-tree.component.sass'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, TranslatePipe, UrlPipe],
+    imports: [CommonModule, TranslatePipe, UrlPipe, TooltipTemplateDirective],
 })
 
 export class SkillTreeComponent {
@@ -23,6 +24,7 @@ export class SkillTreeComponent {
 
     readonly AllSkills = ALL_SKILLS
     readonly SkillTreeID = SkillTreeID
+    readonly SkillPointID = SkillPointID
 
     constructor() {
     }

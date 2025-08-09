@@ -2,6 +2,10 @@
     <div
         class="item"
         [attr.data-tier]="ItemTier[tier]"
+        [tooltipContext]="{ item, tier }"
+        [tooltipTemplate]="tooltip"
+        placement="bottom"
+        tooltipClass="tooltip-override"
         (click)="unequipItem.emit(slotName)"
     >
         <img
@@ -15,3 +19,24 @@
 } @else {
     <div class="slot-name">{{ slotName }}</div>
 }
+
+<ng-template
+    #tooltip
+    let-item="item"
+    let-tier="tier"
+>
+    <div class="item__tooltip">
+        <span>{{ ('items:names.' + ItemID[item.id]) | i18next }}</span>
+        <span
+            [attr.data-tier]="ItemTier[tier]"
+            class="tier"
+        >{{ ('items:tiers.' + ItemTier[tier]) | i18next }}</span>
+
+        @if (item.type === ItemType.equipment) {
+            @for (stat of $any(item.stats); track stat.id) {
+                <span class="stat">{{ stat.id | statToPercentage:stat.amount }} {{ ('app:playerStats.' + stat.id) | i18next }}</span>
+            }
+            <span class="click">{{ 'items:clickToUnequip' | i18next }}</span>
+        }
+    </div>
+</ng-template>

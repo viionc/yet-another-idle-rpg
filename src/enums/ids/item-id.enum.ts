@@ -25,7 +25,7 @@ export enum ItemID {
     ratCatcher = 23,
     woodenBow = 24,
     trophyNecklace = 25,
-    machette = 26,
+    machete = 26,
     stoneArrow = 27,
     stone = 28,
 }

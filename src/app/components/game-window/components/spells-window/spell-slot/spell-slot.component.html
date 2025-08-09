@@ -1,0 +1,21 @@
+@let spellData = SPELLS_DATA[spellId];
+
+<div
+    [autoPlacement]="false"
+    [style]="{ 'background-image': spellData.url | url }"
+    [tooltipContext]="{ spellData }"
+    [tooltipTemplate]="tooltip"
+    class="spell"
+    placement="bottom"
+    tooltipClass="tooltip-override"
+></div>
+
+<ng-template
+    #tooltip
+    let-spell="spellData"
+>
+    <div class="spell__tooltip">
+        <span>{{ ('spells:names.' + SpellID[spell.id] + '.name')  | i18next }}</span>
+
+    </div>
+</ng-template>

@@ -1,0 +1,18 @@
+@use 'palette' as palette
+
+.spell
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    height: 100%
+    cursor: pointer
+    background-size: contain
+
+    img
+        object-fit: contain
+
+    &__tooltip
+
+        span:first-child
+            color: palette.$cyan

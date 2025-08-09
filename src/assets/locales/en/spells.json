@@ -1,0 +1,16 @@
+{
+    "names": {
+        "doubleAttack": {
+            "name": "Double Attack",
+            "desc": ""
+        },
+        "haste": {
+            "name": "Haste",
+            "desc": ""
+        },
+        "fireStrike": {
+            "name": "Fire Strike",
+            "desc": ""
+        }
+    }
+}

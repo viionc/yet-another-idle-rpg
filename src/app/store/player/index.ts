@@ -11,3 +11,4 @@ export const selectPlayerInventory = createSelector(playerFeature.selectPlayerSt
 export const selectPlayerEquipment = createSelector(playerFeature.selectPlayerState, (state) => state.equipment)
 export const selectUnlockedSkillPoints = createSelector(playerFeature.selectPlayerState, (state) => state.unlockedSkillPoints)
 export const selectHasAutoWaveProgressionUnlocked = createSelector(playerFeature.selectPlayerState, (state) => !!state.unlockedSkillPoints[SkillPointID.autoWaveProgression])
+export const selectPlayerUnlockedSpells = createSelector(playerFeature.selectPlayerState, (state) => state.unlockedSpells)

@@ -9,7 +9,7 @@
         "level": "Level",
         "xpMultiplier": "XP Multiplier",
         "gold": "Gold",
-        "goldMultiplier": "Gold Multiplier",
+        "goldCoinsMultiplier": "Gold Multiplier",
         "skillPoints": "Skill points"
     },
     "wave": "Wave",

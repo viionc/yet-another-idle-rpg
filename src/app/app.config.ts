@@ -1,6 +1,7 @@
 import {
     APP_INITIALIZER,
     ApplicationConfig,
+    importProvidersFrom,
     isDevMode,
     provideBrowserGlobalErrorListeners,
     provideZonelessChangeDetection,
@@ -20,6 +21,10 @@ import { BattleEffects } from './store/battle/battle.effects'
 import { provideEffects } from '@ngrx/effects'
 import { PlayerEffects } from './store/player/player.effects'
 import { initialStates } from './store/store'
+import { TranslatePipe } from './pipe/i18next.pipe';
+import { AsyncPipe } from '@angular/common';
+import { UrlPipe } from './pipe/url.pipe';
+import { CalculateXpPipe } from './pipe/calculate-xp.pipe';
 
 export function ensureStateShapeMetaReducer(
     reducer: ActionReducer<any>,
@@ -60,7 +65,7 @@ export function i18nextInitializer() {
                 backend: {
                     loadPath: '/assets/locales/{{lng}}/{{ns}}.json',
                 },
-                ns: ['app', 'enemies', 'zones', 'skill-tree'],
+                ns: ['app', 'enemies', 'zones', 'skill-tree', 'items', 'spells'],
                 defaultNS: 'app',
                 interpolation: {
                     escapeValue: false,
@@ -96,5 +101,7 @@ export const appConfig: ApplicationConfig = {
             useFactory: i18nextInitializer,
             multi: true,
         },
+        importProvidersFrom([TranslatePipe, AsyncPipe, UrlPipe, CalculateXpPipe]),
+
     ],
 };
