@@ -39,7 +39,7 @@ export class GameIntervalService {
                 this.battleTick += 1
             }),
         ).subscribe(([[_, attackSpeed], isInCombat]) => {
-            if (((attackSpeed * 1000) / (this.battleTick * TICK_DURATION_IN_MS) === 1)) {
+            if (((attackSpeed * 1000) / (this.battleTick * TICK_DURATION_IN_MS) <= 1)) {
                 this.battleTick = 0
 
                 if (!isInCombat) {
@@ -49,7 +49,7 @@ export class GameIntervalService {
                 }
             }
 
-            if (this.tick * 100 === TICK_DURATION_IN_SECONDS) {
+            if (this.tick * 100 >= TICK_DURATION_IN_SECONDS) {
                 this.tick = 0
                 this.store.dispatch(updateTickAction())
             }
