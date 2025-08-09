@@ -10,6 +10,7 @@ export const selectCurrentZoneId = createSelector(battleFeature.selectBattleStat
 export const selectCurrentZoneData = createSelector(battleFeature.selectBattleState, (state) => ZONES_DATA[state.currentZone])
 export const selectCurrentWave = createSelector(battleFeature.selectBattleState, (state) => state.currentWave)
 export const selectHasAutoWaveProgressionEnabled = createSelector(battleFeature.selectBattleState, (state) => state.autoWaveProgressionEnabled)
+export const selectEquippedSpells = createSelector(battleFeature.selectBattleState, (state) => state.equippedSpells)
 
 export const selectCurrentWaveKillCount = createSelector(
     battleFeature.selectBattleState,

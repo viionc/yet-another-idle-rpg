@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core'
 import { Store } from '@ngrx/store'
-import { combineLatest, combineLatestWith, Subject, Subscription, tap } from 'rxjs'
+import { combineLatest, combineLatestWith, Subject, Subscription, tap, withLatestFrom } from 'rxjs'
 import { clearInterval, setInterval } from 'worker-timers'
 import { selectCurrentEnemy, selectCurrentWave, selectIsInCombat } from 'app/store/battle'
 import { defaultAttackAction, startBattleAction } from 'app/store/battle/battle.actions'
 import { selectPlayerStat } from 'app/store/player'
+import { updateTickAction } from '../store/actions';
 
 const TICK_DURATION_IN_MS = 100
+const TICK_DURATION_IN_SECONDS = 1000
 
 @Injectable({ providedIn: 'root' })
 export class GameIntervalService {
@@ -30,27 +32,26 @@ export class GameIntervalService {
             this.keepAlive.next()
         }, TICK_DURATION_IN_MS)
         this.intervalSub = this.keepAlive.pipe(
-            combineLatestWith(
-                this.attackSpeed$,
-                this.isInCombat$,
-            ),
+            combineLatestWith(this.attackSpeed$),
+            withLatestFrom(this.isInCombat$),
             tap(() => {
                 this.tick += 1
                 this.battleTick += 1
             }),
-        ).subscribe(([_, attackSpeed, isInCombat]) => {
+        ).subscribe(([[_, attackSpeed], isInCombat]) => {
             if (((attackSpeed * 1000) / (this.battleTick * TICK_DURATION_IN_MS) === 1)) {
                 this.battleTick = 0
 
                 if (!isInCombat) {
                     this.store.dispatch(startBattleAction())
                 } else {
-                    this.store.dispatch(defaultAttackAction())
+                    this.store.dispatch(defaultAttackAction({}))
                 }
             }
 
-            if (this.tick / 1000 === 1) {
+            if (this.tick * 100 === TICK_DURATION_IN_SECONDS) {
                 this.tick = 0
+                this.store.dispatch(updateTickAction())
             }
         })
 

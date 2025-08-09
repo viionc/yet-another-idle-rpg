@@ -1,4 +1,5 @@
 @use 'palette' as palette
+@use 'sass:map'
 
 .spell
     display: flex
@@ -8,11 +9,58 @@
     height: 100%
     cursor: pointer
     background-size: contain
+    position: relative
 
     img
         object-fit: contain
 
     &__tooltip
+        display: flex
+        flex-direction: column
+
+    &__header
+        display: flex
+        gap: 0.8rem
+        align-items: center
+        justify-content: space-between
 
         span:first-child
             color: palette.$cyan
+
+        .melee
+            color: map.get(palette.$spellTypePalette, melee)
+
+        .magic
+            color: map.get(palette.$spellTypePalette, magic)
+
+        .buff
+            color: map.get(palette.$spellTypePalette, buff)
+
+    &__desc
+        margin-top: 0.5rem
+        font-size: 0.8rem
+
+    &__info
+        display: flex
+        gap: 1rem
+        margin-top: 0.3rem
+
+        .mana
+            color: palette.$blue
+
+        .cooldown
+            color: palette.$yellow
+
+        .duration
+            color: palette.$cyan
+
+.spell::before
+    position: absolute
+    background: conic-gradient(#000b var(--time-left), transparent var(--time-left))
+    border-radius: 8px
+    opacity: 0.8
+    content: ""
+    top: 0
+    left: 0
+    height: 100%
+    width: 100%

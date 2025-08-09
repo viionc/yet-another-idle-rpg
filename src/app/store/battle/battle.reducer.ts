@@ -5,7 +5,7 @@ import { ZoneID } from 'enums/ids/zone-id.enum'
 import ZONES_DATA from 'data/zones-data'
 import ENEMIES_DATA from 'data/enemies-data'
 import { resetStateAction } from '../actions'
-
+import { EquippedSpell } from '../../../interfaces/spells/equipped-spell.interface';
 
 export interface BattleState {
     isInCombat: boolean
@@ -14,6 +14,7 @@ export interface BattleState {
     currentZone: ZoneID
     currentWave: number
     autoWaveProgressionEnabled: boolean
+    equippedSpells: EquippedSpell[]
 }
 
 export const initialState: BattleState = {
@@ -23,6 +24,7 @@ export const initialState: BattleState = {
     currentZone: ZoneID.horseshoeBeach,
     currentWave: 1,
     autoWaveProgressionEnabled: false,
+    equippedSpells: [],
 }
 
 const startBattle = (state: BattleState): BattleState => {
@@ -114,6 +116,28 @@ const reducer = createReducer(
     on(actions.enabledAutoWaveProgressionAction, (state, { enabled }) => ({
         ...state,
         autoWaveProgressionEnabled: enabled,
+    })),
+    on(actions.addSpellToSpellBarAction, (state, spell) => ({
+        ...state,
+        equippedSpells: [...state.equippedSpells, spell],
+    })),
+    on(actions.updateEquippedSpellAction, (state, { spellId, cooldown, duration }) => {
+        const spells = [...state.equippedSpells]
+        const spellIndex = state.equippedSpells.findIndex((s) => s.spellId === spellId)
+        spells[spellIndex] = {
+            ...state.equippedSpells[spellIndex],
+            cooldown,
+            duration,
+        }
+
+        return {
+            ...state,
+            equippedSpells: spells,
+        }
+    }),
+    on(actions.updateEquippedSpellsAction, (state, { equippedSpells }) => ({
+        ...state,
+        equippedSpells,
     })),
 )
 

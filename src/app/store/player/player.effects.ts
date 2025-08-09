@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { switchMap, withLatestFrom } from 'rxjs'
 import { selectPlayerEquipment, selectPlayerStat, selectPlayerStats, selectUnlockedSkillPoints } from './index'
 import { Action, Store } from '@ngrx/store'
-import { battleEndedAction } from '../battle/battle.actions'
+import { battleEndedAction, equipSpellAction } from '../battle/battle.actions'
 import ENEMIES_DATA from 'data/enemies-data'
 import { PlayerStat } from 'types/player/player-stat.type'
 import {
@@ -26,6 +26,7 @@ import { ItemType } from 'enums/items/item-type.enum'
 import { EquipmentSlot, EquipmentSlotKey } from 'enums/equipment-slot.enum'
 import { ALL_SKILLS } from '../../../data/skill-tree-data';
 import { SkillPointType } from '../../../enums/skill-point-type.enum';
+import { selectEquippedSpells } from '../battle';
 
 @Injectable()
 export class PlayerEffects {
@@ -146,8 +147,9 @@ export class PlayerEffects {
         withLatestFrom(
             this.store.select(selectPlayerStat('unspentSkillPoints')),
             this.store.select(selectUnlockedSkillPoints),
+            this.store.select(selectEquippedSpells),
         ),
-        switchMap(([{ id, buyMax }, unspentSkillPoints, unlockedSkillPoints]) => {
+        switchMap(([{ id, buyMax }, unspentSkillPoints, unlockedSkillPoints, equippedSpells]) => {
             const skillPointData = ALL_SKILLS[id]
             const skillMaxLevel = skillPointData.maxLevel
             const currentLevel = unlockedSkillPoints[id] || 0
@@ -179,6 +181,10 @@ export class PlayerEffects {
 
             if (skillPointData.type === SkillPointType.spell) {
                 actions.push(levelUpSpellAction({ id: skillPointData.spellId }))
+
+                if (!equippedSpells.find(s => s.spellId === skillPointData.spellId) && equippedSpells.length < 5) {
+                    actions.push(equipSpellAction({ spellId: skillPointData.spellId }))
+                }
             }
 
             return actions

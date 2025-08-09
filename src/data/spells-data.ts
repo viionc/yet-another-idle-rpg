@@ -13,16 +13,16 @@ export type SpellProps = {
 export type SpellEffectProps = SpellMeleeEffectProps | SpellMagicEffectProps | SpellSupportStatBuffEffectProps;
 
 export type SpellMeleeEffectProps = {
-    type: SpellType.meleeDamage;
+    type: SpellType.melee;
 };
 
 export type SpellMagicEffectProps = {
-    type: SpellType.magicDamage;
+    type: SpellType.magic;
     baseDamage: number;
 };
 
 export type SpellSupportStatBuffEffectProps = {
-    type: SpellType.supportBuff
+    type: SpellType.buff
     duration: number;
     stat: PlayerStat;
     amount: number;
@@ -35,7 +35,7 @@ const SPELLS_DATA: Record<SpellID, SpellProps> = {
         baseCooldown: 60,
         url: "./assets/img/skills/fireStrike.png",
         effect: {
-            type: SpellType.magicDamage,
+            type: SpellType.magic,
             baseDamage: 15,
         },
     },
@@ -45,7 +45,7 @@ const SPELLS_DATA: Record<SpellID, SpellProps> = {
         baseCooldown: 300,
         url: "./assets/img/skills/haste.png",
         effect: {
-            type: SpellType.supportBuff,
+            type: SpellType.buff,
             duration: 60,
             stat: "attackSpeed",
             amount: 0.3,
@@ -57,7 +57,7 @@ const SPELLS_DATA: Record<SpellID, SpellProps> = {
         baseCooldown: 60,
         url: "./assets/img/skills/doubleAttack.png",
         effect: {
-            type: SpellType.meleeDamage,
+            type: SpellType.melee,
         },
     },
 };

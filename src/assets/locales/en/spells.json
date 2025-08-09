@@ -2,15 +2,23 @@
     "names": {
         "doubleAttack": {
             "name": "Double Attack",
-            "desc": ""
+            "desc": "A quick double attack"
         },
         "haste": {
             "name": "Haste",
-            "desc": ""
+            "desc": "Increases attack speed by 0.3 for 1 minute."
         },
         "fireStrike": {
             "name": "Fire Strike",
-            "desc": ""
+            "desc": "A weak fire spell that deals 15 base damage."
         }
-    }
+    },
+    "types": {
+        "melee": "Melee",
+        "magic": "Magic",
+        "buff": "Buff"
+    },
+    "manaCost": "Mana: {{ cost }}",
+    "cooldown": "Cooldown: {{ cooldown }}",
+    "duration": "Duration: {{ duration }}"
 }
