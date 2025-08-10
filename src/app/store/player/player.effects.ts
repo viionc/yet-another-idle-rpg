@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { switchMap, withLatestFrom } from 'rxjs'
-import { selectPlayerEquipment, selectPlayerStat, selectPlayerStats, selectUnlockedSkillPoints } from './index'
+import {
+    selectPlayerEquipment,
+    selectPlayerResources,
+    selectPlayerStat,
+    selectPlayerStats,
+    selectUnlockedSkillPoints,
+} from './index'
 import { Action, Store } from '@ngrx/store'
 import { battleEndedAction, equipSpellAction } from '../battle/battle.actions'
 import ENEMIES_DATA from 'data/enemies-data'
 import { PlayerStat } from 'types/player/player-stat.type'
 import {
     buySkillPointAction,
+    craftItemAction,
     equipItemAction,
     equipItemToSlotAction,
     levelUpSpellAction,
@@ -19,14 +26,15 @@ import {
     updatePlayerStatsAction,
     updateUnlockedSkillPointsAction,
 } from './player.actions'
-import { EquipmentItem, InventoryItem } from 'interfaces/item.interface'
+import { EquipmentItem, InventoryItem, ResourceInventoryItem } from 'interfaces/item.interface'
 import ITEM_DATA from 'data/items-data'
 import { Enemy } from 'interfaces/enemy.interface'
 import { ItemType } from 'enums/items/item-type.enum'
 import { EquipmentSlot, EquipmentSlotKey } from 'enums/equipment-slot.enum'
-import { ALL_SKILLS } from '../../../data/skill-tree-data';
-import { SkillPointType } from '../../../enums/skill-point-type.enum';
-import { selectEquippedSpells } from '../battle';
+import { ALL_SKILLS } from '../../../data/skill-tree-data'
+import { SkillPointType } from '../../../enums/skill-point-type.enum'
+import { selectEquippedSpells } from '../battle'
+import RECIPES_DATA from '../../../data/recipes-data'
 
 @Injectable()
 export class PlayerEffects {
@@ -191,6 +199,57 @@ export class PlayerEffects {
         }),
     ))
 
+    craftItem$ = createEffect(() => this.actions$.pipe(
+        ofType(craftItemAction),
+        withLatestFrom(this.store.select(selectPlayerResources)),
+        switchMap(([{ recipeId }, playerResources]) => {
+            const recipeData = RECIPES_DATA[recipeId]
+
+            const resourcesToUpdate: ResourceInventoryItem[] = []
+            let cantCraft = false
+
+            recipeData.itemsNeeded.forEach((itemNeeded) => {
+                const ownedResource = playerResources[itemNeeded.id]
+
+                if (!ownedResource || ownedResource.amount < itemNeeded.amount) cantCraft = true
+
+                resourcesToUpdate.push({ id: itemNeeded.id, amount: -1 * itemNeeded.amount, type: ItemType.resource })
+            })
+
+            if (cantCraft) return []
+
+            const itemData = ITEM_DATA[recipeData.itemId]
+            const actions = []
+
+            if (itemData.type === ItemType.equipment) {
+                const itemToUpdate: InventoryItem[] = [
+                    {
+                        tier: itemData.tier,
+                        amount: recipeData.createsAmount,
+                        type: itemData.type,
+                        id: itemData.id,
+                    },
+                ]
+
+                actions.push(updatePlayerInventoryAction({ items: itemToUpdate }))
+            }
+
+            if (itemData.type === ItemType.resource) {
+                resourcesToUpdate.push({
+                    id: itemData.id,
+                    type: ItemType.resource,
+                    amount: recipeData.createsAmount,
+                })
+            }
+
+
+            return [
+                ...actions,
+                updatePlayerResourcesAction({ resources: resourcesToUpdate }),
+            ]
+        }),
+    ))
+
     constructor(
         private actions$: Actions,
         private store: Store,
@@ -199,10 +258,10 @@ export class PlayerEffects {
 
     calculateEnemyDrops(enemy: Enemy): {
         itemsToUpdate: InventoryItem[]
-        resourcesToUpdate: InventoryItem[]
+        resourcesToUpdate: ResourceInventoryItem[]
     } {
         const itemsToUpdate: InventoryItem[] = []
-        const resourcesToUpdate: InventoryItem[] = []
+        const resourcesToUpdate: ResourceInventoryItem[] = []
 
         for (const drop of enemy.drops) {
             const roll = Math.ceil(Math.random() * drop.chance)
@@ -223,7 +282,7 @@ export class PlayerEffects {
                     itemsToUpdate.push({ id: drop.id, type, tier, amount })
                     break
                 case ItemType.resource:
-                    resourcesToUpdate.push({ id: drop.id, type, tier, amount })
+                    resourcesToUpdate.push({ id: drop.id, type, amount })
                     break
                 default:
                 // do nothing

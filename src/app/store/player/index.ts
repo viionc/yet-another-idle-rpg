@@ -11,6 +11,7 @@ export const selectPlayerStats = createSelector(playerFeature.selectPlayerState,
 export const selectPlayerStat = (stat: PlayerStat) => createSelector(playerFeature.selectPlayerState, (state) => state.stats[stat])
 export const selectZoneProgressionByZoneIdAndWave = (zoneId: ZoneID, wave: number) => createSelector(playerFeature.selectPlayerState, (state) => (state.zonesProgression[zoneId] || {})[wave] || 0)
 export const selectPlayerInventory = createSelector(playerFeature.selectPlayerState, (state) => state.inventory)
+export const selectPlayerResources = createSelector(playerFeature.selectPlayerState, (state) => state.resources)
 export const selectPlayerEquipment = createSelector(playerFeature.selectPlayerState, (state) => state.equipment)
 export const selectUnlockedSkillPoints = createSelector(playerFeature.selectPlayerState, (state) => state.unlockedSkillPoints)
 export const selectHasAutoWaveProgressionUnlocked = createSelector(playerFeature.selectPlayerState, (state) => !!state.unlockedSkillPoints[SkillPointID.autoWaveProgression])

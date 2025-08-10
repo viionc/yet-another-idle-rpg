@@ -1,11 +1,12 @@
 import { createAction, props } from "@ngrx/store"
 import { PlayerStat } from "../../../types/player/player-stat.type"
-import { InventoryItem } from 'interfaces/item.interface'
+import { InventoryItem, ResourceInventoryItem } from 'interfaces/item.interface'
 import { EquipmentSlotKey } from 'enums/equipment-slot.enum'
 import { ItemID } from 'enums/ids/item-id.enum'
 import { ItemTier } from 'enums/items/item-tier.enum'
-import { SkillPointID } from '../../../enums/ids/skill-tree-node-id.enum';
-import { SpellID } from '../../../enums/ids/spell-id.enum';
+import { SkillPointID } from '../../../enums/ids/skill-tree-node-id.enum'
+import { SpellID } from '../../../enums/ids/spell-id.enum'
+import { RecipeID } from '../../../enums/ids/recipe-id.enum'
 
 // stats
 export const updatePlayerStatsAction = createAction('[Player] Update Stats', props<{
@@ -23,7 +24,7 @@ export const removeItemFromInventoryAction = createAction('[Player] Remove Item 
 
 // resources
 export const updatePlayerResourcesAction = createAction('[Player] Update Resources', props<{
-    resources: InventoryItem[]
+    resources: ResourceInventoryItem[]
 }>())
 
 // equipment
@@ -46,3 +47,4 @@ export const updateUnlockedSkillPointsAction = createAction('[Player] Update Unl
     amount: number
 }>())
 export const levelUpSpellAction = createAction('[Player] Level Up Spell', props<{ id: SpellID }>())
+export const craftItemAction = createAction('[Player] Craft Item', props<{ recipeId: RecipeID }>())

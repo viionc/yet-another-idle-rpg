@@ -3,13 +3,13 @@
         <li
             (click)="changeTab.emit(GameTab.main)"
             class="game-menu__tab"
-        >Battle
+        >{{ ('gameTabs.' + GameTab[GameTab.main]) | i18next }}
         </li>
         @if (level > 1) {
             <li
                 class="game-menu__tab"
                 (click)="changeTab.emit(GameTab.skillTree)"
-            >Skill Tree
+            >{{ ('gameTabs.' + GameTab[GameTab.skillTree]) | i18next }}
                 @if (skillPoints) {
                     <span
                         class="skill-point"
@@ -17,6 +17,12 @@
                 }
             </li>
         }
+        <li
+            class="game-menu__tab"
+            (click)="changeTab.emit(GameTab.crafting)"
+        >
+            {{ ('gameTabs.' + GameTab[GameTab.crafting]) | i18next }}
+        </li>
 
     </ul>
 </nav>

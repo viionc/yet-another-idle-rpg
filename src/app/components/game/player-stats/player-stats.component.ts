@@ -4,7 +4,7 @@ import { AbbreviatePipe } from 'app/pipes/abbreviate.pipe'
 import { CalculateXpPipe } from 'app/pipes/calculate-xp.pipe'
 import { TranslatePipe } from 'app/pipes/i18next.pipe'
 import { PlayerStatsType } from 'app/store/player/player.reducer'
-import { StatToPercentagePipe } from '../../../../pipes/stat-to-percentage.pipe'
+import { StatToPercentagePipe } from '../../../pipes/stat-to-percentage.pipe'
 
 @Component({
     selector: 'app-player-stats',

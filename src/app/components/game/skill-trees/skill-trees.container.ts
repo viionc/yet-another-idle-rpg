@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { SkillTreesComponent } from "./skill-trees.component"
 
 @Component({
@@ -7,6 +7,7 @@ import { SkillTreesComponent } from "./skill-trees.component"
         <app-skill-tree/>
     `,
     imports: [SkillTreesComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class SkillTreesContainer implements OnInit {

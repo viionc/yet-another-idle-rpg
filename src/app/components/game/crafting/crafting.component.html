@@ -1,0 +1,29 @@
+<section class="crafting">
+    <div class="crafting__recipes">
+        @for (recipe of recipesArray; track recipe.id) {
+            <app-slot>
+                <app-recipe-slot
+                    [recipe]="recipe"
+                    (selectItemToCraft)="selectItemToCraft($event)"
+                />
+            </app-slot>
+        }
+    </div>
+    <div class="crafting__cost">
+        @if (recipeToCraft) {
+            @let recipeData = RECIPES_DATA[recipeToCraft];
+
+            <h3>{{ ('items:names.' + ItemID[recipeData.itemId]) | i18next }}</h3>
+            <ul class="crafting__items-needed">
+                @for (itemNeeded of recipeData.itemsNeeded; track itemNeeded.id) {
+                    <li>{{ itemNeeded.amount }}x {{ ('items:names.' + ItemID[itemNeeded.id]) | i18next }}</li>
+                }
+            </ul>
+            <button
+                class="crafting__craft-button"
+                (click)="handleCraftItem(recipeData)"
+            >{{ 'crafting:craft' | i18next }}
+            </button>
+        }
+    </div>
+</section>

@@ -69,3 +69,9 @@ export type InventoryItem = {
     tier: ItemTier
     amount: number
 }
+
+export type ResourceInventoryItem = {
+    id: ItemID
+    type: ItemType.resource
+    amount: number
+}

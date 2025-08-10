@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core'
-import { TranslatePipe } from '../../../../../pipes/i18next.pipe'
-import { SpellID } from '../../../../../../enums/ids/spell-id.enum'
-import { UrlPipe } from '../../../../../pipes/url.pipe'
 import { TooltipTemplateDirective } from 'ngx-tooltip-directives'
-import SPELLS_DATA from '../../../../../../data/spells-data'
-import { SpellType } from '../../../../../../enums/spell-type.enum'
-import { PlayerStatsType } from '../../../../../store/player/player.reducer'
-import { EquippedSpell } from '../../../../../../interfaces/spells/equipped-spell.interface'
+import { TranslatePipe } from '../../../../pipes/i18next.pipe'
+import { UrlPipe } from '../../../../pipes/url.pipe'
+import { EquippedSpell } from '../../../../../interfaces/spells/equipped-spell.interface'
+import { PlayerStatsType } from '../../../../store/player/player.reducer'
+import { SpellID } from '../../../../../enums/ids/spell-id.enum'
+import SPELLS_DATA from '../../../../../data/spells-data'
+import { SpellType } from '../../../../../enums/spell-type.enum'
 
 @Component({
     selector: 'app-spell-slot',

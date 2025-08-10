@@ -3,11 +3,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { EquipmentSlotKey } from 'enums/equipment-slot.enum'
 import { ItemTier } from 'enums/items/item-tier.enum'
 import { Item } from 'interfaces/item.interface'
-import { TranslatePipe } from '../../../../../pipes/i18next.pipe'
-import { ItemID } from '../../../../../../enums/ids/item-id.enum'
+import { TranslatePipe } from '../../../../pipes/i18next.pipe'
+import { ItemID } from '../../../../../enums/ids/item-id.enum'
 import { TooltipTemplateDirective } from 'ngx-tooltip-directives'
-import { ItemType } from '../../../../../../enums/items/item-type.enum'
-import { StatToPercentagePipe } from '../../../../../pipes/stat-to-percentage.pipe'
+import { ItemType } from '../../../../../enums/items/item-type.enum'
+import { StatToPercentagePipe } from '../../../../pipes/stat-to-percentage.pipe'
 
 @Component({
     selector: 'app-equipment-slot',

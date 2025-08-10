@@ -1,19 +1,20 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { PanelComponent } from '../shared/panel/panel.component'
-import { BattleContainer } from "./components/battle/battle.container"
-import { GameMenuContainer } from "./components/game-menu/game-menu.container"
-import { InventoryContainer } from "./components/inventory/inventory.container"
 import { Store } from '@ngrx/store'
 import { resetStateAction } from 'app/store/actions'
-import { EquipmentContainer } from "./components/equipment/equipment.container"
-import { PlayerStatsContainer } from "./components/player-stats/player-stats.container"
 import { BehaviorSubject } from 'rxjs'
 import { GameTab } from 'enums/ids/game-tab.enum'
 import { AsyncPipe, CommonModule } from '@angular/common'
-import { SkillTreesContainer } from "./skill-tree-tab/skill-trees.container"
 import { updatePlayerStatsAction } from '../../store/player/player.actions'
 import { PlayerStat } from '../../../types/player/player-stat.type'
-import { SpellsContainer } from './components/spells/spells.container'
+import { BattleContainer } from './battle/battle.container'
+import { GameMenuContainer } from './game-menu/game-menu.container'
+import { InventoryContainer } from './inventory/inventory.container'
+import { EquipmentContainer } from './equipment/equipment.container'
+import { PlayerStatsContainer } from './player-stats/player-stats.container'
+import { SkillTreesContainer } from './skill-trees/skill-trees.container'
+import { SpellsContainer } from './spells/spells.container'
+import { CraftingContainer } from './crafting/crafting.container'
 
 const imports = [
     PanelComponent,
@@ -32,7 +33,10 @@ const imports = [
     selector: 'app-game',
     templateUrl: 'game.component.html',
     styleUrls: ['./game.component.sass'],
-    imports,
+    imports: [
+        imports,
+        CraftingContainer,
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 

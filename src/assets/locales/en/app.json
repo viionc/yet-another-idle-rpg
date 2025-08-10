@@ -13,5 +13,11 @@
         "skillPoints": "Skill points"
     },
     "wave": "Wave",
-    "killCount": "Kill count"
+    "killCount": "Kill count",
+    "gameTabs": {
+        "main": "Battle",
+        "skillTree": "Skill tree",
+        "crafting": "Crafting",
+        "towns": "Towns"
+    }
 }

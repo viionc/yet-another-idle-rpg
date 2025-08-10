@@ -4,7 +4,7 @@ import * as actions from './player.actions'
 import { calculateXp } from 'app/pipes/calculate-xp.pipe'
 import { initialEquipmentState, statsInitialState } from './player'
 import { battleEndedAction } from '../battle/battle.actions'
-import { InventoryItem, ResourceItem } from 'interfaces/item.interface'
+import { InventoryItem } from 'interfaces/item.interface'
 import { ItemID } from 'enums/ids/item-id.enum'
 import { ItemTier } from 'enums/items/item-tier.enum'
 import { resetStateAction } from '../actions'
@@ -12,13 +12,14 @@ import { EquipmentType } from 'interfaces/player/equipment.type'
 import { ZonesProgression } from '../../../types/player/zones-progression.type'
 import { UnlockedSkillPoints } from '../../../types/player/unlocked-skill-points.type'
 import { UnlockedSpellsType } from '../../../types/player/unlocked-spells.type'
+import { PlayerResourceInventoryType } from '../../../types/player/player-resource-inventory.type'
 
 export type PlayerStatsType = Record<PlayerStat, number>
 
 interface PlayerState {
     stats: PlayerStatsType
     zonesProgression: ZonesProgression
-    resources: InventoryItem[]
+    resources: PlayerResourceInventoryType
     inventory: (InventoryItem | null)[]
     equipment: EquipmentType
     unlockedSkillPoints: UnlockedSkillPoints
@@ -28,14 +29,14 @@ interface PlayerState {
 export const initialState: PlayerState = {
     stats: statsInitialState,
     zonesProgression: {},
-    resources: [],
+    resources: {},
     inventory: new Array(40).fill(null),
     equipment: initialEquipmentState,
     unlockedSkillPoints: {},
     unlockedSpells: {},
 }
 
-const itemIndexFromInventory = (inventory: (InventoryItem | null)[] | ResourceItem[], id: ItemID, tier: ItemTier): number => inventory.findIndex(item => item?.id === id && item?.tier === tier)
+const itemIndexFromInventory = (inventory: (InventoryItem | null)[], id: ItemID, tier: ItemTier): number => inventory.findIndex(item => item?.id === id && item?.tier === tier)
 
 const reducer = createReducer(
     initialState,
@@ -79,21 +80,12 @@ const reducer = createReducer(
         }
     }),
     on(actions.updatePlayerResourcesAction, (state, { resources }) => {
-        const resourcesState = [...state.resources]
+        const resourcesState = { ...state.resources }
 
         resources.forEach((item) => {
-            const itemIndex = itemIndexFromInventory(resourcesState, item.id, item.tier)
-
-            if (itemIndex === -1) {
-                resourcesState.push(item)
-                return
-            }
-
-            const resourcesItem = resourcesState[itemIndex]
-
-            resourcesState[itemIndex] = {
+            resourcesState[item.id] = {
                 ...item,
-                amount: resourcesItem.amount + item.amount,
+                amount: (resourcesState[item.id]?.amount || 0) + item.amount,
             }
         })
 

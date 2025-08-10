@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { InventoryWindow } from "./inventory.component"
 import { Store } from '@ngrx/store'
 import { selectPlayerInventory } from 'app/store/player'
@@ -15,6 +15,7 @@ import { InventoryItem } from 'interfaces/item.interface'
         />
     `,
     imports: [InventoryWindow, AsyncPipe],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class InventoryContainer {

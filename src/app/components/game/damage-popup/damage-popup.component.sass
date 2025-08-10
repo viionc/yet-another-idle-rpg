@@ -1,4 +1,5 @@
-@use '../../../../../styles/palette' as palette
+@use 'palette' as palette
+@use 'variables' as vars
 
 .damage-container
     position: absolute
@@ -24,9 +25,8 @@
     pointer-events: none
     animation: floatMove 1s ease-out forwards, fadeOut 1s ease-out forwards
     color: palette.$yellow
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000
+    text-shadow: vars.$textShadow
 
     &.critical
         font-size: 28px
-        text-shadow: 0 0 8px rgba(255, 215, 0, 0.8)
         color: #ff4444
