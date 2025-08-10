@@ -1,7 +1,7 @@
 import { createFeature, createReducer, on } from "@ngrx/store"
 import { PlayerStat } from "../../../types/player/player-stat.type"
 import * as actions from './player.actions'
-import { calculateXp } from 'app/pipe/calculate-xp.pipe'
+import { calculateXp } from 'app/pipes/calculate-xp.pipe'
 import { initialEquipmentState, statsInitialState } from './player'
 import { battleEndedAction } from '../battle/battle.actions'
 import { InventoryItem, ResourceItem } from 'interfaces/item.interface'
@@ -9,9 +9,9 @@ import { ItemID } from 'enums/ids/item-id.enum'
 import { ItemTier } from 'enums/items/item-tier.enum'
 import { resetStateAction } from '../actions'
 import { EquipmentType } from 'interfaces/player/equipment.type'
-import { ZonesProgression } from '../../../types/player/zones-progression.type';
-import { UnlockedSkillPoints } from '../../../types/player/unlocked-skill-points.type';
-import { UnlockedSpellsType } from '../../../types/player/unlocked-spells.type';
+import { ZonesProgression } from '../../../types/player/zones-progression.type'
+import { UnlockedSkillPoints } from '../../../types/player/unlocked-skill-points.type'
+import { UnlockedSpellsType } from '../../../types/player/unlocked-spells.type'
 
 export type PlayerStatsType = Record<PlayerStat, number>
 

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { GameWindowComponent } from "./components/game-window/game-window.component";
-import { GameIntervalService } from './services/game-interval.service';
+import { Component, OnInit } from '@angular/core'
+import { GameIntervalService } from './services/game-interval.service'
+import { GameComponent } from './components/game/game.component'
 
 @Component({
     selector: 'app-root',
-    imports: [GameWindowComponent],
+    imports: [
+        GameComponent,
+    ],
     templateUrl: './app.html',
     styleUrl: './app.sass',
 })

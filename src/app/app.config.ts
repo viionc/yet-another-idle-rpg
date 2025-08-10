@@ -21,10 +21,10 @@ import { BattleEffects } from './store/battle/battle.effects'
 import { provideEffects } from '@ngrx/effects'
 import { PlayerEffects } from './store/player/player.effects'
 import { initialStates } from './store/store'
-import { TranslatePipe } from './pipe/i18next.pipe';
-import { AsyncPipe } from '@angular/common';
-import { UrlPipe } from './pipe/url.pipe';
-import { CalculateXpPipe } from './pipe/calculate-xp.pipe';
+import { TranslatePipe } from './pipes/i18next.pipe'
+import { AsyncPipe } from '@angular/common'
+import { UrlPipe } from './pipes/url.pipe'
+import { CalculateXpPipe } from './pipes/calculate-xp.pipe'
 
 export function ensureStateShapeMetaReducer(
     reducer: ActionReducer<any>,
@@ -104,4 +104,4 @@ export const appConfig: ApplicationConfig = {
         importProvidersFrom([TranslatePipe, AsyncPipe, UrlPipe, CalculateXpPipe]),
 
     ],
-};
+}
