@@ -1,12 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SpellsWindowComponent } from './spells-window.component';
-import { PanelComponent } from '../../../shared/panel/panel.component';
-import { Store } from '@ngrx/store';
-import { AsyncPipe } from '@angular/common';
-import { SpellID } from '../../../../../enums/ids/spell-id.enum';
-import { castSpellAction } from '../../../../store/battle/battle.actions';
-import { selectEquippedSpells } from '../../../../store/battle';
-import { selectPlayerStats } from '../../../../store/player';
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { SpellsWindowComponent } from './spells-window.component'
+import { PanelComponent } from '../../../shared/panel/panel.component'
+import { Store } from '@ngrx/store'
+import { AsyncPipe } from '@angular/common'
+import { SpellID } from '../../../../../enums/ids/spell-id.enum'
+import { castSpellAction } from '../../../../store/battle/battle.actions'
+import { selectEquippedSpells, selectIsInCombat } from '../../../../store/battle'
+import { selectPlayerStats } from '../../../../store/player'
 
 @Component({
     selector: 'app-spells-window-container',
@@ -15,6 +15,7 @@ import { selectPlayerStats } from '../../../../store/player';
             <app-spells-window
                 [equippedSpells]="equippedSpells$ | async"
                 [playerStats]="playerStats$ | async"
+                [isInCombat]="isInCombat$ | async"
                 (castSpell)="castSpell($event)"
             />
         </app-panel>
@@ -25,6 +26,7 @@ import { selectPlayerStats } from '../../../../store/player';
 export class SpellsWindowContainer {
     equippedSpells$ = this.store.select(selectEquippedSpells)
     playerStats$ = this.store.select(selectPlayerStats)
+    isInCombat$ = this.store.select(selectIsInCombat)
 
     constructor(private store: Store) {
     }

@@ -5,14 +5,14 @@ import {
     addSpellToSpellBarAction,
     battleEndedAction,
     castSpellAction,
-    defaultAttackAction,
+    doDamageAction,
     equipSpellAction,
     nextWaveAction,
     updateEnemyHpAction,
     updateEquippedSpellAction,
     updateEquippedSpellsAction,
 } from './battle.actions'
-import { selectPlayerStats } from '../player'
+import { selectHasSpellCritUnlocked, selectPlayerStats } from '../player'
 import { Action, Store } from '@ngrx/store'
 import {
     selectCurrentEnemy,
@@ -23,19 +23,22 @@ import {
     selectEquippedSpells,
     selectHasAutoWaveProgressionEnabled,
 } from '.'
-import ZONES_DATA from '../../../data/zones-data';
-import SPELLS_DATA, { SpellSupportStatBuffEffectProps } from '../../../data/spells-data';
-import { EquippedSpell } from '../../../interfaces/spells/equipped-spell.interface';
-import { SpellType } from '../../../enums/spell-type.enum';
-import { SpellID } from '../../../enums/ids/spell-id.enum';
-import { updatePlayerStatsAction } from '../player/player.actions';
-import { updateTickAction } from '../actions';
+import ZONES_DATA from '../../../data/zones-data'
+import SPELLS_DATA, { SpellSupportStatBuffEffectProps } from '../../../data/spells-data'
+import { EquippedSpell } from '../../../interfaces/spells/equipped-spell.interface'
+import { SpellType } from '../../../enums/spell-type.enum'
+import { SpellID } from '../../../enums/ids/spell-id.enum'
+import { updatePlayerStatsAction } from '../player/player.actions'
+import { updateTickAction } from '../actions'
+import { AnimationsService } from '../../services/animations.service'
+import { Enemy } from '../../../interfaces/enemy.interface'
+import { ZoneID } from '../../../enums/ids/zone-id.enum'
 
 @Injectable()
 export class BattleEffects {
     defaultAttack$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(defaultAttackAction),
+            ofType(doDamageAction),
             withLatestFrom(
                 this.store.select(selectCurrentZoneId),
                 this.store.select(selectCurrentWave),
@@ -44,38 +47,43 @@ export class BattleEffects {
                 this.store.select(selectCurrentEnemy),
                 this.store.select(selectCurrentEnemyHp),
                 this.store.select(selectCurrentWaveKillCount),
+                this.store.select(selectHasSpellCritUnlocked),
             ),
-            switchMap(([{ isDoubleAttack }, currentZoneId, currentWave, hasAutoWaveProgressionEnabled, playerStats, currentEnemy, currentEnemyHp, killCount]) => {
-                let damage = playerStats.attackPower
-                let isCrit = false
-                if (playerStats.critChance) {
-                    const critRoll = Math.floor(Math.random() * 100) + 1; // 1 - 100
-                    if (playerStats.critChance >= critRoll) {
-                        isCrit = true
-                        damage = Math.ceil(damage * playerStats.critChance)
-                    }
+            switchMap(([
+                           {
+                               isDoubleAttack,
+                               magicDamage,
+                           }, currentZoneId, currentWave, hasAutoWaveProgressionEnabled, playerStats, currentEnemy, currentEnemyHp, killCount, hasSpellCritUnlocked,
+                       ]) => {
+                let damage = 0
+
+                const isMagicDamage = magicDamage > 0
+
+                if (!isMagicDamage) {
+                    damage = playerStats.attackPower
+                } else {
+                    damage = magicDamage + playerStats.magicDamage
                 }
 
-                damage = isDoubleAttack ? damage * 2 : damage
+                const {
+                    isCrit,
+                    damageAfterCrit,
+                } = this.handleCrit(damage, playerStats.critChance, playerStats.critMulti, isMagicDamage, hasSpellCritUnlocked)
+
+                damage = damageAfterCrit
+
+                if (isDoubleAttack) damage *= 2
 
                 const hpAfterDamage = currentEnemyHp - damage
                 const isDead = hpAfterDamage <= 0
 
-                const actions: any[] = [updateEnemyHpAction({ newHp: hpAfterDamage <= 0 ? 0 : hpAfterDamage })]
+                let actions: any[] = [updateEnemyHpAction({ newHp: hpAfterDamage <= 0 ? 0 : hpAfterDamage })]
+
+                this.animationsService.showDamage(damage, isCrit)
 
                 if (!isDead) return actions
 
-                actions.push(battleEndedAction({
-                    enemyId: currentEnemy.id,
-                    zoneId: currentZoneId,
-                    currentWave,
-                }))
-
-                const { enemiesPerWave, maxWave } = ZONES_DATA[currentZoneId]
-                const isLastWave = currentWave === maxWave
-                let shouldProgressToNextWave = hasAutoWaveProgressionEnabled && (((killCount + 1) >= enemiesPerWave) || isLastWave)
-
-                if (shouldProgressToNextWave) actions.push(nextWaveAction())
+                this.handleEnemyDead(actions, currentEnemy, currentZoneId, currentWave, killCount, hasAutoWaveProgressionEnabled)
 
                 return actions
             }),
@@ -85,8 +93,8 @@ export class BattleEffects {
     equipSpell$ = createEffect(() =>
         this.actions$.pipe(
             ofType(equipSpellAction),
-            withLatestFrom(this.store.select(selectPlayerStats)),
-            switchMap(([{ spellId }, playerStats]) => {
+            // withLatestFrom(this.store.select(selectPlayerStats)),
+            switchMap(({ spellId }) => {
                 const spellData = SPELLS_DATA[spellId]
                 const spellToEquip: EquippedSpell = {
                     spellId,
@@ -111,6 +119,7 @@ export class BattleEffects {
             ),
             switchMap(([{ spellId }, playerStats]) => {
                 const spellData = SPELLS_DATA[spellId]
+                const spellType = spellData.effect.type
 
                 const { spellCooldownReduction, increasedSpellDuration } = playerStats
 
@@ -123,19 +132,19 @@ export class BattleEffects {
 
                 if (spellId === SpellID.doubleAttack) {
                     actions.push(
-                        defaultAttackAction({ isDoubleAttack: true }),
+                        doDamageAction({ isDoubleAttack: true }),
                     )
                 }
 
-                if (spellData.effect.type === SpellType.buff) {
-                    const statsToUpdate = {
-                        stat: spellData.effect.stat,
-                        amount: spellData.effect.amount,
-                    }
+                if (spellType === SpellType.buff) {
+                    this.handleBuffSpell(actions, spellData.effect, spellToUpdate, increasedSpellDuration)
+                }
 
-                    spellToUpdate.duration = spellData.effect.duration + increasedSpellDuration
+                if (spellType === SpellType.magic) {
 
-                    actions.push(updatePlayerStatsAction({ stats: [statsToUpdate] }))
+                    actions.push(
+                        doDamageAction({ magicDamage: spellData.effect.baseDamage }),
+                    )
                 }
 
                 return [
@@ -192,6 +201,55 @@ export class BattleEffects {
     constructor(
         private actions$: Actions,
         private store: Store,
+        private animationsService: AnimationsService,
     ) {
+    }
+
+    handleCrit(damage: number, critChance: number, critMulti: number, isMagicDamage: boolean, hasSpellCritUnlocked: boolean): {
+        isCrit: boolean,
+        damageAfterCrit: number
+    } {
+        let isCrit = false
+        let damageAfterCrit = damage
+
+        const shouldRoll = critChance && (!isMagicDamage || hasSpellCritUnlocked)
+        if (shouldRoll) {
+            const critRoll = Math.floor(Math.random() * 100) + 1 // 1 - 100
+            if (critChance >= critRoll) {
+                isCrit = true
+                damageAfterCrit = Math.ceil(damage * critMulti)
+            }
+        }
+
+        return {
+            isCrit,
+            damageAfterCrit,
+        }
+    }
+
+    handleEnemyDead(actions: Action[], currentEnemy: Enemy, currentZoneId: ZoneID, currentWave: number, killCount: number, hasAutoWaveProgressionEnabled: boolean) {
+        actions.push(battleEndedAction({
+            enemyId: currentEnemy.id,
+            zoneId: currentZoneId,
+            currentWave,
+        }))
+
+        const { enemiesPerWave, maxWave } = ZONES_DATA[currentZoneId]
+        const isLastWave = currentWave === maxWave
+        let shouldProgressToNextWave = hasAutoWaveProgressionEnabled && (((killCount + 1) >= enemiesPerWave) || isLastWave)
+
+        if (shouldProgressToNextWave) actions.push(nextWaveAction())
+    }
+
+    handleBuffSpell(actions: Action[], effect: SpellSupportStatBuffEffectProps, spellToUpdate: EquippedSpell, increasedSpellDuration: number) {
+        const { stat, amount } = effect
+        const statsToUpdate = {
+            stat,
+            amount,
+        }
+
+        spellToUpdate.duration = effect.duration + increasedSpellDuration
+
+        actions.push(updatePlayerStatsAction({ stats: [statsToUpdate] }))
     }
 }

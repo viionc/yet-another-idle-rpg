@@ -1,0 +1,32 @@
+@use 'palette' as palette
+
+.damage-container
+    position: absolute
+
+@keyframes floatMove
+    0%
+        transform: translateX(-50%) translate(0, 0) scale(1)
+    100%
+        transform: translateX(-50%) translate(40px, -80px) scale(1.2)
+
+@keyframes fadeOut
+    0%
+        opacity: 1
+    75%
+        opacity: 1
+    100%
+        opacity: 0
+
+.damage-number
+    position: absolute
+    font-size: 20px
+    font-weight: bold
+    pointer-events: none
+    animation: floatMove 1s ease-out forwards, fadeOut 1s ease-out forwards
+    color: palette.$yellow
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000
+
+    &.critical
+        font-size: 28px
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.8)
+        color: #ff4444

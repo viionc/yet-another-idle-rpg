@@ -1,11 +1,12 @@
 <div class="spells-window">
-    @for (slot of slots; track $index) {
+    @for (_ of slots; track $index) {
         <app-slot>
             @if (equippedSpells[$index]) {
                 <app-spell-slot
                     [spellId]="equippedSpells[$index].spellId"
                     [equippedSpell]="equippedSpells[$index]"
                     [playerStats]="playerStats"
+                    [isInCombat]="isInCombat"
                     (castSpell)="castSpell.emit($event)"
                 />
             }

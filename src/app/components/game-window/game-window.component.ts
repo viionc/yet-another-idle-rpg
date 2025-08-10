@@ -11,9 +11,9 @@ import { BehaviorSubject } from 'rxjs'
 import { GameTab } from 'enums/ids/game-tab.enum'
 import { AsyncPipe, CommonModule } from '@angular/common'
 import { SkillTreeWindowContainer } from "./skill-tree-tab/skill-tree-window.container"
-import { updatePlayerStatsAction } from '../../store/player/player.actions';
-import { PlayerStat } from '../../../types/player/player-stat.type';
-import { SpellsWindowContainer } from './components/spells-window/spells-window.container';
+import { updatePlayerStatsAction } from '../../store/player/player.actions'
+import { PlayerStat } from '../../../types/player/player-stat.type'
+import { SpellsWindowContainer } from './components/spells-window/spells-window.container'
 
 const imports = [
     PanelComponent,
@@ -43,6 +43,7 @@ export class GameWindowComponent {
 
     constructor(private store: Store) {
     }
+
 
     resetState() {
         this.store.dispatch(resetStateAction())

@@ -3,9 +3,9 @@ import { Store } from '@ngrx/store'
 import { combineLatest, Subject, Subscription, tap, withLatestFrom } from 'rxjs'
 import { clearInterval, setInterval } from 'worker-timers'
 import { selectCurrentEnemy, selectCurrentWave, selectIsInCombat } from 'app/store/battle'
-import { defaultAttackAction, startBattleAction } from 'app/store/battle/battle.actions'
+import { doDamageAction, startBattleAction } from 'app/store/battle/battle.actions'
 import { selectPlayerStat } from 'app/store/player'
-import { updateTickAction } from '../store/actions';
+import { updateTickAction } from '../store/actions'
 
 const TICK_DURATION_IN_MS = 100
 const TICK_DURATION_IN_SECONDS = 1000
@@ -48,7 +48,7 @@ export class GameIntervalService {
                 if (!isInCombat) {
                     this.store.dispatch(startBattleAction())
                 } else {
-                    this.store.dispatch(defaultAttackAction({}))
+                    this.store.dispatch(doDamageAction({}))
                 }
             }
 

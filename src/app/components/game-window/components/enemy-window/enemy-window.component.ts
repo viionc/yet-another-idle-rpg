@@ -7,7 +7,7 @@ import { Enemy } from 'interfaces/enemy.interface'
     selector: 'app-enemy-window',
     templateUrl: 'enemy-window.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrls: ['./enemy-window.component.sass']
+    styleUrls: ['./enemy-window.component.sass'],
 })
 
 export class EnemyWindowContainerComponent {

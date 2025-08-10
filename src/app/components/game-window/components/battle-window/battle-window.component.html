@@ -10,7 +10,14 @@
         @if (!isInCombat) {
             <app-spinner/>
         } @else {
-            <app-enemy-window-container [currentEnemy]="currentEnemy"/>
+            <app-enemy-window-container
+                #enemyElement
+                [currentEnemy]="currentEnemy"
+            />
         }
+        <app-damage-popup
+            [x]="enemyX"
+            [y]="enemyY"
+        />
     </div>
 </div>

@@ -1,13 +1,16 @@
 import { createAction, props } from '@ngrx/store'
 import { EnemyID } from 'enums/ids/enemy-id.enum'
 import { ZoneID } from 'enums/ids/zone-id.enum'
-import { SpellID } from '../../../enums/ids/spell-id.enum';
-import { SpellType } from '../../../enums/spell-type.enum';
-import { EquippedSpell } from '../../../interfaces/spells/equipped-spell.interface';
+import { SpellID } from '../../../enums/ids/spell-id.enum'
+import { SpellType } from '../../../enums/spell-type.enum'
+import { EquippedSpell } from '../../../interfaces/spells/equipped-spell.interface'
 
 export const startBattleAction = createAction('[Battle] Start')
 export const changeZoneAction = createAction('[Battle] Change Zone', props<{ zoneId: ZoneID }>())
-export const defaultAttackAction = createAction('[Battle] Default Attack', props<{ isDoubleAttack?: boolean }>())
+export const doDamageAction = createAction('[Battle] Default Attack', props<{
+    isDoubleAttack?: boolean,
+    magicDamage?: number
+}>())
 export const updateEnemyHpAction = createAction('[Battle] Update Enemy Hp', props<{ newHp: number }>())
 export const battleEndedAction = createAction('[Battle] Ended', props<{
     enemyId: EnemyID,
