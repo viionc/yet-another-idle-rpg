@@ -1,0 +1,19 @@
+@use 'variables' as vars
+
+.npc
+    position: absolute
+    transform: translate(-50%, -50%)
+    width: 8rem
+    height: 8rem
+    background-color: rgba(vars.$panelBackgroundColor, 0.8)
+    border-radius: vars.$panelBorderRadius
+    cursor: pointer
+    padding: 0.4rem
+    transition: background-color 0.2s ease
+
+    img
+        object-fit: contain
+        width: 100%
+
+    &:hover
+        background-color: rgba(vars.$panelBackgroundColor, 0.9)

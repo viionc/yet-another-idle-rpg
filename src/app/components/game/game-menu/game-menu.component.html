@@ -23,6 +23,11 @@
         >
             {{ ('gameTabs.' + GameTab[GameTab.crafting]) | i18next }}
         </li>
-
+        <li
+            class="game-menu__tab"
+            (click)="changeTab.emit(GameTab.towns)"
+        >
+            {{ ('gameTabs.' + GameTab[GameTab.towns]) | i18next }}
+        </li>
     </ul>
 </nav>

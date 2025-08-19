@@ -1,0 +1,67 @@
+{
+    "intro1": {
+        "message": "Welcome to the best shop in La Harpar!",
+        "opt1": "Isn't it the only shop here?"
+    },
+    "intro2": {
+        "message": "Well, yes... That's what makes it the best one!",
+        "opt1": "What are you selling then?"
+    },
+    "intro3": {
+        "message": "All kinds of goods. Materials, food, equipment, and any essential items you will need during your adventures.",
+        "opt1": "Let's see then."
+    },
+    "default": {
+        "message": "Are you buying something?",
+        "opt1": "Your basement is rat-free. I need to take a bath though.",
+        "opt2": "Let me see your wares.",
+        "opt3": "Tell me something about you.",
+        "opt4": "What can you tell me about La Harpar?",
+        "opt5": "Any people I should meet?",
+        "opt6": "Do you need help with anything?"
+    },
+    "aboutMe": {
+        "message": "I'm La Harpar's most charismatic Trader. Born and raised here.",
+        "opt1": "How is living here, anything interesting to do?",
+        "opt2": "You must know everyone here then, right?"
+    },
+    "aboutLiving": {
+        "message": "Not much. It's pretty calm around here. Other than crab infestation on the beach. I heard Josh is looking for someone to help with that.",
+        "opt1": "I'll look for him."
+    },
+    "aboutVillage": {
+        "message": "La Harpar is the biggest fish exporter in Port Stockmar. Our fishermen are known in all four regions, aye.",
+        "opt1": "What makes them so famous?",
+        "opt2": "Hmm, I've heard enough."
+    },
+    "aboutFishermen": {
+        "message": "Our sea has the best quality fish and our fishermen are experts, with decades of expertise. This village has been a vital part of North Lirold for a long time.",
+        "opt1": "So it's the fish that does all the work, I see."
+    },
+    "aboutFishQuality": {
+        "message": "Well quality of fish is obviously important, but it requires a lot of work to catch and prepare them properly.",
+        "opt1": "Okay, let me ask something else."
+    },
+    "aboutPeople": {
+        "message": "There is Josh in Tavern, he is a good guy, but drinks too much. Tavern is always busy so Bartender for sure is looking for some help. Marvin is back from his expedition, you can find him somewhere around the guild.",
+        "opt1": "Guild?"
+    },
+    "aboutGuild": {
+        "message": "Exploration Guild. Main rest point for local adventures. You should visit them, they can help you prepare.",
+        "opt1": "I'll definitely go there.",
+        "opt2": "I don't need help, I can do well on my own."
+    },
+    "aboutDanger": {
+        "message": "Confident, aye. I like it. But be careful, wildlife here can be dangerous.",
+        "opt1": "Thanks."
+    },
+    "questOffer": {
+        "message": "Aye, I need help with rats in the basement. Please get rid of them. I'll make it worth the time.",
+        "opt1": "Rats? Should be easy.",
+        "opt2": "No thanks, I'm not a basement dweller."
+    },
+    "questCompleted": {
+        "message": "Not anymore. I'm busy moving my merchandise back to the basement.",
+        "opt1": "Okay, see you soon."
+    }
+}

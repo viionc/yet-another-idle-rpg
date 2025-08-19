@@ -1,0 +1,18 @@
+@use 'variables' as vars
+
+button
+    padding: 0.4rem
+    background: none
+    outline: none
+    cursor: pointer
+    border: none
+    opacity: 0.8
+    border-radius: vars.$panelBorderRadius
+    display: flex
+    align-items: center
+    justify-content: center
+    transition: background-color 0.2s ease
+
+    &:hover
+        background-color: rgba(vars.$panelBackgroundColor, 0.6)
+        opacity: 1

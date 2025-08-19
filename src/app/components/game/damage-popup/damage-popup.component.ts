@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { Subscription } from 'rxjs'
 import { AnimationsService } from '../../../services/animations.service'
 
@@ -12,7 +12,6 @@ interface FloatingDamage {
     selector: 'app-damage-popup',
     templateUrl: './damage-popup.component.html',
     styleUrls: ['./damage-popup.component.sass'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DamagePopupComponent implements OnInit, OnDestroy {
     @Input() x: number

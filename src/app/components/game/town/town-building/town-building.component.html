@@ -1,0 +1,12 @@
+<section
+    class="building"
+    [style.background-image]="building.url | url"
+>
+    <h2 class="building__title">{{ 'map:townTabs.' + TownBuildingID[building.tabId] | i18next }}</h2>
+    @for (npc of building.npcIds; track npc.id) {
+        <app-npc-frame
+            [npc]="npc"
+            (openDialogue)="openDialogue.emit($event)"
+        />
+    }
+</section>

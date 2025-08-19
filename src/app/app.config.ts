@@ -25,6 +25,8 @@ import { TranslatePipe } from './pipes/i18next.pipe'
 import { AsyncPipe } from '@angular/common'
 import { UrlPipe } from './pipes/url.pipe'
 import { CalculateXpPipe } from './pipes/calculate-xp.pipe'
+import { TownsEffects } from './store/towns/towns.effects'
+import { townsFeature } from './store/towns/towns.reducer'
 
 export function ensureStateShapeMetaReducer(
     reducer: ActionReducer<any>,
@@ -55,6 +57,14 @@ export function localStorageSyncReducer(
     return localStorageSync({ keys: ['game', 'player', 'battle'], rehydrate: true })(reducer)
 }
 
+const translations = [
+    'app', 'enemies', 'zones', 'skill-tree', 'items', 'spells', 'map', 'crafting', 'npc',
+    'dialogues/laHarparBartender',
+    'dialogues/laHarparJosh',
+    'dialogues/laHarparTrader',
+    'dialogues/laHarparElara',
+]
+
 export function i18nextInitializer() {
     return () =>
         i18next
@@ -65,7 +75,7 @@ export function i18nextInitializer() {
                 backend: {
                     loadPath: '/assets/locales/{{lng}}/{{ns}}.json',
                 },
-                ns: ['app', 'enemies', 'zones', 'skill-tree', 'items', 'spells'],
+                ns: translations,
                 defaultNS: 'app',
                 interpolation: {
                     escapeValue: false,
@@ -84,10 +94,12 @@ export const appConfig: ApplicationConfig = {
         provideEffects([
             BattleEffects,
             PlayerEffects,
+            TownsEffects,
         ]),
         provideState(gameFeature),
         provideState(playerFeature),
         provideState(battleFeature),
+        provideState(townsFeature),
         provideStoreDevtools({
             maxAge: 25, // Retains last 25 states
             logOnly: !isDevMode(), // Restrict extension to log-only mode

@@ -1,0 +1,15 @@
+<div
+    class="npc"
+    [style.top.%]="npc.position.y"
+    [style.left.%]="npc.position.x"
+    (click)="openDialogue.emit(npc.id)"
+>
+    @let npcData = NPC_Data[npc.id];
+    <img
+        [ngSrc]="npcData.url"
+        alt=""
+        height="128"
+        width="128"
+        loading="lazy"
+    >
+</div>

@@ -15,6 +15,7 @@ import { PlayerStatsContainer } from './player-stats/player-stats.container'
 import { SkillTreesContainer } from './skill-trees/skill-trees.container'
 import { SpellsContainer } from './spells/spells.container'
 import { CraftingContainer } from './crafting/crafting.container'
+import { TownsContainer } from './town/towns.container'
 
 const imports = [
     PanelComponent,
@@ -36,6 +37,7 @@ const imports = [
     imports: [
         imports,
         CraftingContainer,
+        TownsContainer,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

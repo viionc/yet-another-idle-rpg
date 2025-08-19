@@ -1,0 +1,32 @@
+<section class="dialogue-modal">
+    <app-close-button (onClose)="close.emit()"/>
+    @if (npc && dialogue) {
+        @let currentDialogue = dialogue[currentDialogueId];
+
+        <div class="dialogue-modal__wrapper">
+            <div>
+                <h2 class="dialogue-modal__npc-name">{{ 'npc:names.' + NpcID[npc.id] | i18next }}</h2>
+                <p class="dialogue-modal__npc-message">{{ currentDialogue.messageKey | i18next }}</p>
+            </div>
+            <img
+                class="dialogue-modal__npc-image"
+                alt=""
+                height="128"
+                width="128"
+                loading="lazy"
+                [ngSrc]="npc.url"
+            >
+        </div>
+
+        <ul class="dialogue-modal__options">
+            @for (option of $any(currentDialogue.options); track $index) {
+                <li
+                    class="dialogue-modal__option"
+                    (click)="currentDialogueId = option.next"
+                >{{ option.responseKey | i18next }}
+                </li>
+            }
+        </ul>
+
+    }
+</section>
